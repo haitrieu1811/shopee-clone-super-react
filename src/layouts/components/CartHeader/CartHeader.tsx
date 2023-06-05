@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { Fragment, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, createSearchParams, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 import authApi from 'src/apis/auth.api';
 import Avatar from 'src/assets/images/avatar.png';
@@ -9,9 +10,22 @@ import Logo from 'src/components/Logo';
 import Poppover from 'src/components/Poppover';
 import config from 'src/config';
 import { AppContext } from 'src/contexts/app.context';
+import useQueryConfig, { QueryConfigType } from 'src/hooks/useQueryConfig';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { SearchSchema, searchSchema } from 'src/utils/rules';
+
+type FormData = SearchSchema;
 
 const CartHeader = () => {
+    const navigate = useNavigate();
+
+    const { handleSubmit, register } = useForm<FormData>({
+        resolver: yupResolver(searchSchema)
+    });
+
     const { isAuthenticated, setIsAuthenticated, profile, setProfile } = useContext(AppContext);
+
+    const queryConfig: QueryConfigType = useQueryConfig();
 
     const logoutMutation = useMutation({
         mutationFn: () => authApi.logout(),
@@ -24,6 +38,16 @@ const CartHeader = () => {
     const handleLogout = () => {
         logoutMutation.mutate();
     };
+
+    const onSubmitSearch = handleSubmit((data) => {
+        navigate({
+            pathname: config.routes.home,
+            search: createSearchParams({
+                ...queryConfig,
+                name: data.name_search
+            }).toString()
+        });
+    });
 
     return (
         <header>
@@ -133,16 +157,17 @@ const CartHeader = () => {
                         <div className='mx-[15px] h-[30px] w-[0.5px] bg-orange'></div>
                         <div className='text-xl capitalize text-orange'>Giỏ hàng</div>
                     </Link>
-                    <div className='flex h-[40px]'>
+                    <form className='flex h-[40px]' onSubmit={onSubmitSearch}>
                         <input
                             type='text'
-                            placeholder='Chẳng lo không có gì đê mặc'
+                            placeholder='Tìm trong Shopee'
                             className='w-[538px] rounded-bl-sm rounded-tl-sm border-2 border-orange px-[10px] text-sm outline-none'
+                            {...register('name_search')}
                         />
                         <button className='flex w-[80px] items-center justify-center rounded-br-sm rounded-tr-sm bg-orange'>
                             <SearchIcon className='h-[14px] w-[14px] fill-white' />
                         </button>
-                    </div>
+                    </form>
                 </nav>
             </div>
         </header>

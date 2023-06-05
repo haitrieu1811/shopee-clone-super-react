@@ -76,15 +76,18 @@ export const schema = yup.object({
             }
             return price_min !== '' || price_max !== '';
         }
-    })
+    }),
+    name_search: yup.string().trim().required('Từ khóa tìm kiếm không được để trống')
 });
 
 export const loginSchema = schema.pick(['email', 'password']);
 export const registerSchema = schema.pick(['email', 'password', 'confirm_password']);
 export const priceFilterSchema = schema.pick(['price_min', 'price_max']);
+export const searchSchema = schema.pick(['name_search']);
 
 export type LoginSchema = yup.InferType<typeof loginSchema>;
 export type RegisterSchema = yup.InferType<typeof registerSchema>;
 export type PriceFilterSchema = yup.InferType<typeof priceFilterSchema>;
+export type SearchSchema = yup.InferType<typeof searchSchema>;
 
 export type Schema = yup.InferType<typeof schema>;

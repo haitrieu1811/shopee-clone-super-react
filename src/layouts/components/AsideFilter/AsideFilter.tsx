@@ -13,6 +13,7 @@ import { HomeContext } from 'src/pages/Home/Home';
 import { NoUndefinedField } from 'src/types/utils.type';
 import { PriceFilterSchema, priceFilterSchema } from 'src/utils/rules';
 import CategoryItem from './CategoryItem';
+import InputV2 from 'src/components/InputV2/InputV2';
 
 type FormData = NoUndefinedField<PriceFilterSchema>;
 
@@ -86,7 +87,7 @@ const AsideFilter = () => {
                     <div className='text-sm font-medium'>Khoảng giá</div>
                     <form onSubmit={onSubmit}>
                         <div className='mt-5 flex items-start justify-between'>
-                            <Controller
+                            {/* <Controller
                                 control={control}
                                 name='price_min'
                                 render={({ field }) => (
@@ -103,6 +104,17 @@ const AsideFilter = () => {
                                         ref={field.ref}
                                     />
                                 )}
+                            /> */}
+                            <InputV2
+                                control={control}
+                                type='number'
+                                name='price_min'
+                                classNameInput='h-[30px] w-[80px] rounded-sm border border-gray-300 p-2 text-sm outline-none'
+                                classNameError='hidden'
+                                placeholder='TỪ'
+                                onChange={() => {
+                                    trigger('price_max');
+                                }}
                             />
                             <div className='h-[1px] w-[10px] bg-gray-300'></div>
                             <Controller

@@ -1,53 +1,34 @@
 import { useQuery } from '@tanstack/react-query';
-import { isUndefined, omitBy } from 'lodash';
 
-import { createContext } from 'react';
+import { createContext, useMemo } from 'react';
 import productApi from 'src/apis/product.api';
 import ProductList from 'src/components/ProductList';
-import useQueryParams from 'src/hooks/useQueryParams';
+import useQueryConfig, { QueryConfigType } from 'src/hooks/useQueryConfig';
 import AsideFilter from 'src/layouts/components/AsideFilter';
 import ProductSort from 'src/layouts/components/ProductSort';
-import { CategoryType, ProductItemType, ProductListParamsType } from 'src/types/product.type';
+import { CategoryType, ProductListParamsType } from 'src/types/product.type';
 
 interface HomeContextType {
     pageSize: number;
     queryConfig: QueryConfigType;
-    productList: ProductItemType[];
     categoryList: CategoryType[];
+    isLoading: boolean;
 }
 
 export const HomeContext = createContext<HomeContextType>({
     pageSize: 0,
     queryConfig: {},
-    productList: [],
-    categoryList: []
+    categoryList: [],
+    isLoading: false
 });
 
-type QueryConfigType = {
-    [key in keyof ProductListParamsType]: string;
-};
-
 const Home = () => {
-    const queryParams: QueryConfigType = useQueryParams();
-    const queryConfig: QueryConfigType = omitBy(
-        {
-            category: queryParams.category,
-            exclude: queryParams.exclude,
-            limit: queryParams.limit || 20,
-            name: queryParams.name,
-            order: queryParams.order,
-            page: queryParams.page || '1',
-            price_max: queryParams.price_max,
-            price_min: queryParams.price_min,
-            rating_filter: queryParams.rating_filter,
-            sort_by: queryParams.sort_by
-        },
-        isUndefined
-    );
+    const queryConfig = useQueryConfig();
 
     const getProductListQuery = useQuery({
         queryKey: ['productList', queryConfig],
         queryFn: () => productApi.getProductList(queryConfig as ProductListParamsType),
+        staleTime: 3 * 60 * 1000,
         keepPreviousData: true
     });
 
@@ -56,13 +37,18 @@ const Home = () => {
         queryFn: () => productApi.getCategoryList()
     });
 
+    const productList = useMemo(
+        () => getProductListQuery.data?.data.data.products,
+        [getProductListQuery.data?.data.data.products]
+    );
+
     return (
         <HomeContext.Provider
             value={{
                 queryConfig,
                 pageSize: getProductListQuery.data?.data.data.pagination.page_size || 0,
-                productList: getProductListQuery.data?.data.data.products || [],
-                categoryList: getCategoryListQuery.data?.data.data || []
+                categoryList: getCategoryListQuery.data?.data.data || [],
+                isLoading: getProductListQuery.isLoading
             }}
         >
             <div className='bg-[#f5f5f5]'>
@@ -73,7 +59,7 @@ const Home = () => {
                         </div>
                         <div className='col-span-11 lg:col-span-9'>
                             <ProductSort />
-                            <ProductList />
+                            <ProductList productList={productList || []} />
                         </div>
                     </div>
                 </div>

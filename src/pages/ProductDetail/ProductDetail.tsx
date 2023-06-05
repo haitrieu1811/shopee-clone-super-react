@@ -1,20 +1,35 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import classNames from 'classnames';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
+import DOMPurify from 'dompurify';
 import productApi from 'src/apis/product.api';
-import Button from 'src/components/Button';
-import { AddCartIcon, MinusIcon, PlusIcon } from 'src/components/Icons';
-import ProductRating from 'src/components/ProductRating';
-import Spinner from 'src/components/Spinner/Spinner';
-import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils';
+import purchasesApi from 'src/apis/purchase.api';
 import FreeShipImage from 'src/assets/images/free-ship.png';
+import Button from 'src/components/Button';
+import { AddCartIcon, NextIcon, PrevIcon } from 'src/components/Icons';
+import ProductList from 'src/components/ProductList';
+import ProductRating from 'src/components/ProductRating';
+import QuantityController from 'src/components/QuantityController';
+import Spinner from 'src/components/Spinner/Spinner';
+import { ProductItemType, ProductListParamsType } from 'src/types/product.type';
+import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } from 'src/utils/utils';
+import { purchaseStatus } from 'src/constants/purchase';
 
 const ProductDetail = () => {
-    const { productId } = useParams();
+    const queryClient = useQueryClient();
 
-    const [imageShow, setImageShow] = useState<string>('');
+    const { nameId } = useParams();
+    const productId = getIdFromNameId(nameId as string);
+
+    const [buyCount, setBuyCount] = useState<number>(1);
+
+    const imageRef = useRef<HTMLImageElement>(null);
+
+    const [activeImage, setActiveImage] = useState<string>('');
+    const [indexCurrentImages, setIndexCurrentImages] = useState<number[]>([0, 5]);
 
     const getProductItemQuery = useQuery({
         queryKey: ['productItem', productId],
@@ -22,12 +37,90 @@ const ProductDetail = () => {
         enabled: Boolean(productId)
     });
 
-    const imageActive = useMemo(() => getProductItemQuery.data?.data.data.image, [getProductItemQuery]);
-    const imageList = useMemo(() => getProductItemQuery.data?.data.data.images, [getProductItemQuery]);
     const productData = useMemo(() => getProductItemQuery.data?.data.data, [getProductItemQuery]);
+    const currentImages = useMemo(
+        () => (productData ? productData.images.slice(...indexCurrentImages) : []),
+        [productData, indexCurrentImages]
+    );
+
+    const queryConfig: ProductListParamsType = { page: '1', limit: '30', category: productData?.category._id };
+
+    const getProductListRelatedQuery = useQuery({
+        queryKey: ['productList', queryConfig],
+        queryFn: () => productApi.getProductList(queryConfig),
+        staleTime: 3 * 60 * 1000,
+        enabled: Boolean(productData?.category._id)
+    });
+
+    const productListRelated = useMemo(
+        () => getProductListRelatedQuery.data?.data.data.products,
+        [getProductListRelatedQuery.data?.data.data.products]
+    );
+
+    useEffect(() => {
+        if (productData && productData?.images.length > 0) {
+            setActiveImage(productData?.images[0]);
+        }
+    }, [productData]);
 
     const handleChangeImage = (image: string) => {
-        setImageShow(image);
+        setActiveImage(image);
+    };
+
+    const handleNextSlideImage = () => {
+        if (indexCurrentImages[1] < (productData as ProductItemType)?.images.length) {
+            setIndexCurrentImages((prevState) => [prevState[0] + 1, prevState[1] + 1]);
+        }
+    };
+
+    const handlePrevSlideImage = () => {
+        if (indexCurrentImages[0] > 0) {
+            setIndexCurrentImages((prevState) => [prevState[0] - 1, prevState[1] - 1]);
+        }
+    };
+
+    const handleZoomImage = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        const image = imageRef.current as HTMLImageElement;
+        const { naturalWidth, naturalHeight } = image;
+        const rect = e.currentTarget.getBoundingClientRect();
+
+        // Cách 1: Khi đã giải quyết được Bubble Event
+        // const { offsetX, offsetY } = e.nativeEvent;
+
+        // Cách 2: Khi không giải quyết được Bubble Event
+        const offsetX = e.pageX - (rect.x + window.scrollX);
+        const offsetY = e.pageY - (rect.y + window.scrollY);
+
+        const top = offsetY * (1 - naturalHeight / rect.height);
+        const left = offsetX * (1 - naturalWidth / rect.width);
+
+        image.style.width = `${naturalWidth}px`;
+        image.style.height = `${naturalHeight}px`;
+        image.style.maxWidth = 'unset';
+        image.style.top = `${top}px`;
+        image.style.left = `${left}px`;
+    };
+
+    const handleRemoveZoomImage = () => {
+        imageRef.current?.removeAttribute('style');
+    };
+
+    const handleChangeBuyCount = (value: number) => {
+        setBuyCount(value);
+    };
+
+    const addToCartMutation = useMutation({
+        mutationFn: (body: { product_id: string; buy_count: number }) => purchasesApi.addToCart(body),
+        onSuccess: (data) => {
+            toast.success(data.data.message, { autoClose: 2000 });
+            queryClient.invalidateQueries({ queryKey: ['cartList', { status: purchaseStatus.inCart }] });
+        }
+    });
+
+    const handleAddToCart = () => {
+        if (productData) {
+            addToCartMutation.mutate({ product_id: productData._id, buy_count: buyCount });
+        }
     };
 
     return (
@@ -36,26 +129,33 @@ const ProductDetail = () => {
                 <div className='container py-5'>
                     <div className='grid grid-cols-12 gap-6 rounded-sm bg-white shadow-sm'>
                         <div className='col-span-5 p-[15px]'>
-                            <div className='relative w-full pt-[100%]'>
+                            {/* Ảnh được hiển thị */}
+                            <div
+                                className='relative w-full overflow-hidden pt-[100%] hover:cursor-zoom-in'
+                                onMouseMove={handleZoomImage}
+                                onMouseLeave={handleRemoveZoomImage}
+                            >
                                 <img
-                                    src={imageShow || imageActive}
-                                    alt={imageShow}
-                                    className='absolute inset-0 w-full object-contain'
+                                    ref={imageRef}
+                                    src={activeImage}
+                                    alt={activeImage}
+                                    className='absolute inset-0 h-full w-full object-contain'
                                 />
                             </div>
-                            <div className='mt-[10px] grid grid-cols-10 flex-nowrap gap-[10px]'>
-                                {imageList?.map((image, index) => {
-                                    const isActive = image === imageShow;
+                            {/* Danh sách hình ảnh sản phẩm */}
+                            <div className='relative mt-[10px] grid grid-cols-10 gap-[10px]'>
+                                <button
+                                    onClick={handlePrevSlideImage}
+                                    className='absolute left-0 top-1/2 z-[1] h-10 w-5 -translate-y-1/2 bg-black/20'
+                                >
+                                    <PrevIcon className='h-4 w-4 fill-white' />
+                                </button>
+                                {currentImages?.map((image, index) => {
+                                    const isActive = image === activeImage;
                                     return (
                                         <div
                                             key={index}
-                                            className={classNames(
-                                                'relative col-span-2 cursor-pointer rounded-sm border-2 pt-[100%] hover:border-orange',
-                                                {
-                                                    'border-orange': isActive,
-                                                    'border-transparent': !isActive
-                                                }
-                                            )}
+                                            className='relative col-span-2 cursor-pointer rounded-sm pt-[100%]'
                                             onMouseEnter={() => handleChangeImage(image)}
                                         >
                                             <img
@@ -63,20 +163,39 @@ const ProductDetail = () => {
                                                 alt={image}
                                                 className='absolute inset-0 h-full w-full rounded-sm object-cover'
                                             />
+                                            <div
+                                                className={classNames(
+                                                    'pointer-events-none absolute inset-0 z-[2] rounded-sm border-2 hover:border-orange',
+                                                    {
+                                                        'border-orange': isActive,
+                                                        'border-transparent': !isActive
+                                                    }
+                                                )}
+                                            ></div>
                                         </div>
                                     );
                                 })}
+                                <button
+                                    onClick={handleNextSlideImage}
+                                    className='absolute right-0 top-1/2 z-[1] h-10 w-5 -translate-y-1/2 bg-black/20'
+                                >
+                                    <NextIcon className='h-4 w-4 fill-white' />
+                                </button>
                             </div>
                         </div>
                         <div className='col-span-7 pr-[35px] pt-5'>
+                            {/* Tiêu đề sản phẩm */}
                             <div className='flex items-center'>
-                                <span className='mr-4 flex-shrink-0 rounded-sm bg-orange px-1 py-[2px] text-xs font-medium capitalize text-white'>
-                                    Yêu thích
-                                </span>
+                                {productData.sold > 500 && (
+                                    <span className='mr-4 flex-shrink-0 rounded-sm bg-orange px-1 py-[2px] text-xs font-medium capitalize text-white'>
+                                        Yêu thích
+                                    </span>
+                                )}
                                 <h1 className='line-clamp-2 text-xl font-medium' title={productData.name}>
                                     {productData.name}
                                 </h1>
                             </div>
+                            {/* Thông tin về đánh giá, số lượt xem và số lượng bán được*/}
                             <div className='mt-[10px] flex items-center'>
                                 <div
                                     className='flex items-center border-r-[1px] border-r-slate-400 pr-[15px]'
@@ -105,6 +224,7 @@ const ProductDetail = () => {
                                     <div className='text-sm capitalize text-gray-500'>Đã bán</div>
                                 </div>
                             </div>
+                            {/* Giá sản phẩm */}
                             <div className='mt-[24px] flex items-center rounded-sm bg-[#f5f5f5] px-4 py-[15px]'>
                                 <div className='mr-4 flex items-center text-xl text-[#929292] line-through'>
                                     <span className='mr-1 underline'>đ</span>
@@ -114,7 +234,13 @@ const ProductDetail = () => {
                                     <span className='mr-1 underline'>đ</span>
                                     {formatCurrency(productData.price)}
                                 </div>
+                                {rateSale(productData.price_before_discount, productData.price) > 0 && (
+                                    <span className='ml-[15px] flex-shrink-0 rounded-sm bg-orange px-1 py-[2px] text-xs font-medium uppercase text-white'>
+                                        {rateSale(productData.price_before_discount, productData.price)}% giảm
+                                    </span>
+                                )}
                             </div>
+                            {/* Vận chuyển */}
                             <div className='mt-[50px] flex items-start'>
                                 <div className='mr-[50px] text-sm text-slate-500'>Vận chuyển</div>
                                 <div className='flex items-start'>
@@ -127,28 +253,26 @@ const ProductDetail = () => {
                                     </div>
                                 </div>
                             </div>
+                            {/* Input nhập số lượng sản phẩm cần mua */}
                             <div className='mt-[25px] flex items-center'>
                                 <div className='mr-[50px] text-sm text-slate-500'>Số lượng</div>
-                                <div className='mr-[15px] flex items-center'>
-                                    <button className='border-[rgba(0, 0, 0, 0.09)] flex h-8 w-8 items-center justify-center rounded-bl-sm rounded-tl-sm border text-slate-500'>
-                                        <MinusIcon className='h-[10px] w-[10px] fill-black' />
-                                    </button>
-                                    <input
-                                        type='text'
-                                        name='quantity'
-                                        defaultValue={1}
-                                        className='h-8 w-[50px] border-y-[1px] border-b-[#00000016] border-t-[#00000016] text-center outline-none'
-                                    />
-                                    <button className='flex h-8 w-8 items-center justify-center rounded-br-sm rounded-tr-sm border border-[#00000016] text-slate-500'>
-                                        <PlusIcon className='h-[10px] w-[10px] fill-black' />
-                                    </button>
-                                </div>
+                                <QuantityController
+                                    onDecrease={handleChangeBuyCount}
+                                    onIncrease={handleChangeBuyCount}
+                                    onType={handleChangeBuyCount}
+                                    value={buyCount}
+                                    max={productData.quantity}
+                                />
                                 <div className='text-sm text-slate-500' title={String(productData.quantity)}>
                                     {formatNumberToSocialStyle(productData.quantity)} sản phẩm có sẵn
                                 </div>
                             </div>
+                            {/* Thêm và mua sản phẩm */}
                             <div className='mt-[50px] flex'>
-                                <Button className='mr-[15px] rounded-sm border-[1px] border-orange bg-[#ff57221a] px-5 py-[10px] hover:bg-[#ffc5b22e]'>
+                                <Button
+                                    className='mr-[15px] rounded-sm border-[1px] border-orange bg-[#ff57221a] px-5 py-[10px] hover:bg-[#ffc5b22e]'
+                                    onClick={handleAddToCart}
+                                >
                                     <AddCartIcon className='mr-[10px] h-5 w-5 fill-transparent stroke-orange' />
                                     <span className='capitalize text-orange'>Thêm vào giỏ hàng</span>
                                 </Button>
@@ -158,13 +282,28 @@ const ProductDetail = () => {
                             </div>
                         </div>
                     </div>
+                    {/* Mô tả sản phẩm */}
                     <div className='mt-[15px] rounded-sm bg-white p-[25px] shadow-sm'>
-                        <h2 className='mb-[24px] bg-[#f5f5f5] p-[14px] text-lg uppercase'>Chi tiết sản phẩm</h2>
+                        <h2 className='mb-[24px] bg-[#f5f5f5] p-[14px] text-lg uppercase'>Mô tả sản phẩm</h2>
                         <div
-                            className='px-[14px] text-sm leading-loose text-gray-500'
-                            dangerouslySetInnerHTML={{ __html: productData.description }}
+                            className='px-[14px] text-sm leading-loose text-black/80'
+                            dangerouslySetInnerHTML={{
+                                __html: DOMPurify.sanitize(productData.description)
+                            }}
                         ></div>
                     </div>
+                    {/* Sản phẩm liên quan */}
+                    {productListRelated && productListRelated.length > 0 && (
+                        <div className='my-10'>
+                            <h2 className='mb-4 font-medium uppercase text-[#00000089]'>Có thể bạn cũng thích</h2>
+                            <ProductList
+                                productList={productListRelated}
+                                pagination={false}
+                                classNameOfList='grid grid-cols-12 gap-[10px]'
+                                classNameOfItem='col-span-10 md:col-span-5 lg:col-span-2'
+                            />
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div className='container py-5'>

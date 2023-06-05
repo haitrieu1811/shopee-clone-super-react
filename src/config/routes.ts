@@ -4,7 +4,7 @@ const routes = {
     logout: '/logout',
     register: '/register',
     profile: '/profile',
-    productDetail: '/products/:productId',
+    productDetail: '/:nameId',
     cart: '/cart',
     notFound: '*'
 } as const;

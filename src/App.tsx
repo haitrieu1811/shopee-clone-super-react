@@ -102,7 +102,7 @@ const App = () => {
     return (
         <Fragment>
             {element}
-            <ToastContainer autoClose={3000} />
+            <ToastContainer position='bottom-right' />
         </Fragment>
     );
 };

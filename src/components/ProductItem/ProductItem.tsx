@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 import EventImage from 'src/assets/images/event.png';
 import { ProductItemType } from 'src/types/product.type';
-import { formatCurrency, formatNumberToSocialStyle } from 'src/utils/utils';
+import { formatCurrency, formatNumberToSocialStyle, generateNameId, rateSale } from 'src/utils/utils';
 import ProductRating from '../ProductRating';
 
 interface ProductItemProps {
@@ -10,16 +10,22 @@ interface ProductItemProps {
 }
 
 const ProductItem = ({ data }: ProductItemProps) => {
+    const discount = rateSale(data.price_before_discount, data.price);
+
     return (
         <div className='relative shadow-sm hover:-translate-y-[2px] hover:shadow-md'>
-            <Link to={`/products/${data._id}`}>
-                <div className='absolute -left-1 top-[10px] z-[1] bg-orange px-1 py-[1px] text-xs font-medium text-white after:absolute after:left-0 after:top-full after:z-[2] after:border-l-4 after:border-t-4 after:border-x-transparent after:border-b-transparent after:border-t-orange after:brightness-[60%]'>
-                    Yêu thích
-                </div>
-                <div className='absolute right-0 top-0 z-[1] border-solid bg-[#ffd840f2] p-1 text-center text-xs font-medium after:absolute after:left-0 after:top-full after:border-x-[20px] after:border-b-[4px] after:border-x-[#ffd840f2] after:border-y-transparent'>
-                    <div className='text-orange'>43%</div>
-                    <div className='uppercase text-white'>Giảm</div>
-                </div>
+            <Link to={`/${generateNameId({ name: data.name, id: data._id })}`}>
+                {data.sold > 500 && (
+                    <div className='absolute -left-1 top-[10px] z-[1] bg-orange px-1 py-[1px] text-xs font-medium text-white after:absolute after:left-0 after:top-full after:z-[2] after:border-l-4 after:border-t-4 after:border-x-transparent after:border-b-transparent after:border-t-orange after:brightness-[60%]'>
+                        Yêu thích
+                    </div>
+                )}
+                {discount > 0 && (
+                    <div className='absolute right-0 top-0 z-[1] border-solid bg-[#ffd840f2] p-1 text-center text-xs font-medium after:absolute after:left-0 after:top-full after:border-x-[20px] after:border-b-[4px] after:border-x-[#ffd840f2] after:border-y-transparent'>
+                        <div className='text-orange'>{discount}%</div>
+                        <div className='uppercase text-white'>Giảm</div>
+                    </div>
+                )}
                 <div className='relative pt-[100%]'>
                     <img
                         src={data.image}
