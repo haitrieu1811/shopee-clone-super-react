@@ -10,6 +10,7 @@ interface AppContextInterface {
   setProfile: React.Dispatch<React.SetStateAction<User | null>>;
   extendedCartList: ExtendedCartItem[];
   setExtendedCartList: React.Dispatch<React.SetStateAction<ExtendedCartItem[]>>;
+  reset: () => void;
 }
 
 const initialAppContext = {
@@ -18,7 +19,8 @@ const initialAppContext = {
   profile: getProfileFromStorage(),
   setProfile: () => null,
   extendedCartList: [],
-  setExtendedCartList: () => null
+  setExtendedCartList: () => null,
+  reset: () => null
 };
 
 export const AppContext = createContext<AppContextInterface>(initialAppContext);
@@ -28,6 +30,12 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
   const [profile, setProfile] = useState<User | null>(initialAppContext.profile);
   const [extendedCartList, setExtendedCartList] = useState<ExtendedCartItem[]>([]);
 
+  const reset = () => {
+    setIsAuthenticated(false);
+    setProfile(null);
+    setExtendedCartList([]);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -36,7 +44,8 @@ const AppProvider = ({ children }: { children: ReactNode }) => {
         profile,
         setProfile,
         extendedCartList,
-        setExtendedCartList
+        setExtendedCartList,
+        reset
       }}
     >
       {children}

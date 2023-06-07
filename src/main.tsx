@@ -9,7 +9,14 @@ import './index.css';
 import AppProvider from './contexts/app.context.tsx';
 import ScrollToTop from './components/ScrollToTop/ScrollToTop.tsx';
 
-const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 0
+    }
+  }
+});
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>

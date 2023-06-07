@@ -1,4 +1,4 @@
-import { Fragment, useContext } from 'react';
+import { Fragment, useContext, useEffect } from 'react';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import config from './config';
 import { injectedRoutes, protectedRoutes, publicRoutes } from './routes';
 import { AppContext } from './contexts/app.context';
+import { localStorageEventTarget } from './utils/auth';
 
 const ProtectedRoute = () => {
   const { isAuthenticated } = useContext(AppContext);
@@ -17,6 +18,14 @@ const RejectedRoute = () => {
 };
 
 const App = () => {
+  const { reset } = useContext(AppContext);
+  useEffect(() => {
+    localStorageEventTarget.addEventListener('clearLS', reset);
+    return () => {
+      localStorageEventTarget.removeEventListener('clearLS', reset);
+    };
+  }, [reset]);
+
   // PUBLIC ROUTES
   const publicRouteElements = publicRoutes.map((route) => {
     const Layout = route.layout;

@@ -8,7 +8,7 @@ import { AuthResponse } from 'src/types/auth.type';
 import {
   getAccessTokenFromStorage,
   getProfileFromStorage,
-  removeAccessTokenFromStorage,
+  clearLocalStorage,
   setAccessTokenToStorage,
   setProfileToStorage
 } from './auth';
@@ -53,7 +53,7 @@ class Http {
           setProfileToStorage(this.profile);
         } else if (url === config.routes.logout) {
           this.accessToken = '';
-          removeAccessTokenFromStorage();
+          clearLocalStorage();
         }
         return response;
       },
@@ -63,6 +63,9 @@ class Http {
           const data: any | undefined = error.response?.data;
           const message = data?.message || error.message;
           toast.error(message);
+        }
+        if (error.response?.status === HttpStatusCode.Unauthorized) {
+          clearLocalStorage();
         }
         return Promise.reject(error);
       }
