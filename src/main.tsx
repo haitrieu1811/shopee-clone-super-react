@@ -12,16 +12,16 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop.tsx';
 const queryClient = new QueryClient({ defaultOptions: { queries: { refetchOnWindowFocus: false } } });
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-    <React.StrictMode>
-        <BrowserRouter>
-            <QueryClientProvider client={queryClient}>
-                <AppProvider>
-                    <ScrollToTop>
-                        <App />
-                    </ScrollToTop>
-                </AppProvider>
-                <ReactQueryDevtools />
-            </QueryClientProvider>
-        </BrowserRouter>
-    </React.StrictMode>
+  <React.StrictMode>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <AppProvider>
+          <ScrollToTop>
+            <App />
+          </ScrollToTop>
+        </AppProvider>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </BrowserRouter>
+  </React.StrictMode>
 );

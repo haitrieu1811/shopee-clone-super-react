@@ -5,13 +5,13 @@ import RegisterHeader from '../components/RegisterHeader';
 import Footer from 'src/components/Footer';
 
 const RegisterLayout = ({ children }: LayoutType) => {
-    return (
-        <Fragment>
-            <RegisterHeader />
-            {children}
-            <Footer />
-        </Fragment>
-    );
+  return (
+    <Fragment>
+      <RegisterHeader />
+      {children}
+      <Footer />
+    </Fragment>
+  );
 };
 
 export default RegisterLayout;

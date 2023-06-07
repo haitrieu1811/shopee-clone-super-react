@@ -5,13 +5,13 @@ import Header from 'src/components/Header';
 import { LayoutType } from 'src/types/layout.type';
 
 const MainLayout = ({ children }: LayoutType) => {
-    return (
-        <Fragment>
-            <Header />
-            {children}
-            <Footer />
-        </Fragment>
-    );
+  return (
+    <Fragment>
+      <Header />
+      {children}
+      <Footer />
+    </Fragment>
+  );
 };
 
 export default MainLayout;

@@ -15,25 +15,25 @@ import Cart from 'src/pages/Cart';
 import CartLayout from 'src/layouts/CartLayout';
 
 interface Route {
-    path: string;
-    page: () => JSX.Element;
-    layout: ({ children }: LayoutType) => JSX.Element;
-    children?: Route[];
-    index?: boolean;
+  path: string;
+  page: () => JSX.Element;
+  layout: ({ children }: LayoutType) => JSX.Element;
+  children?: Route[];
+  index?: boolean;
 }
 
 export const publicRoutes: Route[] = [
-    { path: config.routes.home, page: Home, layout: MainLayout, index: true },
-    { path: config.routes.notFound, page: NotFound, layout: MainLayout },
-    { path: config.routes.productDetail, page: ProductDetail, layout: MainLayout }
+  { path: config.routes.home, page: Home, layout: MainLayout, index: true },
+  { path: config.routes.notFound, page: NotFound, layout: MainLayout },
+  { path: config.routes.productDetail, page: ProductDetail, layout: MainLayout }
 ];
 
 export const protectedRoutes: Route[] = [
-    { path: config.routes.profile, page: Profile, layout: MainLayout },
-    { path: config.routes.cart, page: Cart, layout: CartLayout }
+  { path: config.routes.profile, page: Profile, layout: MainLayout },
+  { path: config.routes.cart, page: Cart, layout: CartLayout }
 ];
 
 export const injectedRoutes: Route[] = [
-    { path: config.routes.login, page: Login, layout: RegisterLayout },
-    { path: config.routes.register, page: Register, layout: RegisterLayout }
+  { path: config.routes.login, page: Login, layout: RegisterLayout },
+  { path: config.routes.register, page: Register, layout: RegisterLayout }
 ];
