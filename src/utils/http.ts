@@ -23,7 +23,7 @@ class Http {
     this.accessToken = getAccessTokenFromStorage() || '';
     this.profile = getProfileFromStorage() || null;
     this.instance = axios.create({
-      baseURL: 'https://api-ecom.duthanhduoc.com/',
+      baseURL: config.app.baseUrl,
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json'

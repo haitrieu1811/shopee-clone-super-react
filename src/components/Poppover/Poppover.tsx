@@ -55,7 +55,7 @@ const Poppover = ({
                 transformOrigin: `${middlewareData.arrow?.x}px ${placement.startsWith('bottom') ? 'top' : 'bottom'}`,
                 zIndex: 9999
               }}
-              className='relative rounded-sm border border-gray-200 bg-white shadow-md before:absolute before:left-0 before:top-0 before:z-10 before:h-[50px] before:w-full before:-translate-y-full before:cursor-pointer before:bg-transparent'
+              className='relative max-w-full rounded-sm border border-gray-200 bg-white shadow-md before:absolute before:left-0 before:top-0 before:h-[10px] before:w-full before:-translate-y-full before:cursor-pointer before:bg-transparent'
               initial={{ opacity: 0, scale: 0 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0 }}

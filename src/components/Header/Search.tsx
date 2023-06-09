@@ -7,7 +7,7 @@ const Search = () => {
   const { onSubmit, register } = useSearchProducts();
 
   return (
-    <div className='mx-20 flex-1'>
+    <div className='mt-6 w-full md:mx-20 md:mt-0 md:flex-1'>
       <div className='relative'>
         <form onSubmit={onSubmit}>
           <input
@@ -24,7 +24,7 @@ const Search = () => {
           </button>
         </form>
       </div>
-      <div className='mt-2'>
+      <div className='mt-2 text-center md:text-left'>
         <Link to='/' className='mr-4 text-[13px] font-light text-gray-100'>
           Kênh người bán
         </Link>

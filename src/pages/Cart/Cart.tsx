@@ -118,7 +118,7 @@ const Cart = () => {
   const deleteMutation = useMutation({
     mutationFn: purchasesApi.deletePurchase,
     onSuccess: (data) => {
-      toast.success(data.data.message, { autoClose: 2000 });
+      toast.success(data.data.message);
       getCartListQuery.refetch();
     }
   });
@@ -130,7 +130,7 @@ const Cart = () => {
   const buyProductsMutation = useMutation({
     mutationFn: purchasesApi.buyPurchases,
     onSuccess: (data) => {
-      toast.success(data.data.message, { autoClose: 2000 });
+      toast.success(data.data.message);
       getCartListQuery.refetch();
     }
   });

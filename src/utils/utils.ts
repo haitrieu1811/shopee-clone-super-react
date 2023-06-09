@@ -1,6 +1,8 @@
 import axios, { AxiosError } from 'axios';
+
+import defaultAvatar from 'src/assets/images/default-avatar.jpg';
+import config from 'src/config';
 import HttpStatusCode from 'src/constants/httpStatusCode';
-import { PurchaseItemType } from 'src/types/purchase.type';
 
 export const isAxiosError = <T>(error: unknown): error is AxiosError<T> => {
   // eslint-disable-next-line import/no-named-as-default-member
@@ -41,4 +43,8 @@ export const generateNameId = ({ name, id }: { name: string; id: string }) => {
 export const getIdFromNameId = (nameId: string) => {
   const arr = nameId.split('-i-');
   return arr[arr.length - 1];
+};
+
+export const getAvatarUrl = (imageName?: string) => {
+  return imageName ? `${config.app.baseUrl}images/${imageName}` : defaultAvatar;
 };

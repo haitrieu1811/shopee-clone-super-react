@@ -3,10 +3,10 @@ import { Fragment, memo, useContext } from 'react';
 import { Link } from 'react-router-dom';
 
 import authApi from 'src/apis/auth.api';
-import Avatar from 'src/assets/images/avatar.png';
 import config from 'src/config';
 import { purchaseStatus } from 'src/constants/purchase';
 import { AppContext } from 'src/contexts/app.context';
+import { getAvatarUrl } from 'src/utils/utils';
 import { ChevronDownIcon, GlobalIcon } from '../Icons';
 import Poppover from '../Poppover';
 
@@ -30,8 +30,8 @@ const NavHeader = () => {
 
   return (
     <nav className='py-2'>
-      <div className='flex items-center justify-between'>
-        <div className='flex items-center'>
+      <div className='flex flex-col-reverse flex-wrap items-center justify-center md:flex-row md:justify-between'>
+        <div className='mt-1 flex flex-wrap items-center justify-center md:mt-0'>
           <Link to='/' className='text-[13px] font-light text-gray-100 hover:text-[#ffffffb3]'>
             Kênh người bán
           </Link>
@@ -69,12 +69,18 @@ const NavHeader = () => {
               </Fragment>
             }
           />
-
           {isAuthenticated ? (
             <Poppover
               reference={
-                <Link to='' className='flex items-center text-white hover:text-[#ffffffb3]'>
-                  <img src={Avatar} alt='Avatar' className='h-5 w-5 flex-shrink-0 rounded-full' />
+                <Link
+                  to={config.routes.historyPurchase}
+                  className='mt-1 flex items-center text-white hover:text-[#ffffffb3] md:mt-0'
+                >
+                  <img
+                    src={getAvatarUrl(profile?.avatar)}
+                    alt='Avatar'
+                    className='h-5 w-5 flex-shrink-0 rounded-full'
+                  />
                   <span className='mb-[3px] ml-[6px] text-sm'>{profile?.email}</span>
                 </Link>
               }
@@ -87,7 +93,7 @@ const NavHeader = () => {
                     Tài khoản của tôi
                   </Link>
                   <Link
-                    to={''}
+                    to={config.routes.historyPurchase}
                     className='block min-w-[160px] px-4 py-2 text-sm font-medium text-gray-700 hover:cursor-pointer hover:bg-[#fafafa] hover:text-[#00bfa5]'
                   >
                     Đơn mua

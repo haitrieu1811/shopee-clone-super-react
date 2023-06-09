@@ -8,12 +8,12 @@ import { createSearchParams, useNavigate } from 'react-router-dom';
 import Button from 'src/components/Button';
 import { BarIcon, FilterIcon, StartEmptyIcon, StartFillIcon } from 'src/components/Icons';
 import InputNumber from 'src/components/InputNumber';
+import InputV2 from 'src/components/InputV2/InputV2';
 import config from 'src/config';
 import { HomeContext } from 'src/pages/Home/Home';
 import { NoUndefinedField } from 'src/types/utils.type';
 import { PriceFilterSchema, priceFilterSchema } from 'src/utils/rules';
 import CategoryItem from './CategoryItem';
-import InputV2 from 'src/components/InputV2/InputV2';
 
 type FormData = NoUndefinedField<PriceFilterSchema>;
 
@@ -84,7 +84,7 @@ const AsideFilter = () => {
         <div className='mb-6'>
           <div className='text-sm font-medium'>Khoảng giá</div>
           <form onSubmit={onSubmit}>
-            <div className='mt-5 flex items-start justify-between'>
+            <div className='mt-5 flex items-center justify-between'>
               <InputV2
                 control={control}
                 type='number'
@@ -128,7 +128,7 @@ const AsideFilter = () => {
               <div
                 key={index}
                 onClick={() => handleRatingFilter(5 - index)}
-                className={classNames('inline-flex items-center rounded-2xl px-3 py-1', {
+                className={classNames('flex items-center rounded-2xl px-3 py-1 md:inline-flex', {
                   'bg-[#ebebeb]': queryConfig.rating_filter === (5 - index).toString()
                 })}
                 tabIndex={0}

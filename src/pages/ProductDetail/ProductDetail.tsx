@@ -125,7 +125,7 @@ const ProductDetail = () => {
         { product_id: productData._id, buy_count: buyCount },
         {
           onSuccess: (data) => {
-            toast.success(data.data.message, { autoClose: 2000 });
+            toast.success(data.data.message);
           }
         }
       );

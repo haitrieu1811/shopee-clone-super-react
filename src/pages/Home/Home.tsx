@@ -53,11 +53,11 @@ const Home = () => {
     >
       <div className='bg-[#f5f5f5]'>
         <div className='container'>
-          <div className='grid grid-cols-11 gap-10 pt-6'>
-            <div className='col-span-11 lg:col-span-2'>
+          <div className='flex flex-wrap pt-6'>
+            <div className='w-full md:mr-10 md:w-[190px]'>
               <AsideFilter />
             </div>
-            <div className='col-span-11 lg:col-span-9'>
+            <div className='flex-1'>
               <ProductSort />
               <ProductList productList={productList || []} />
             </div>

@@ -35,6 +35,15 @@ export const getRules = (getValues?: UseFormGetValues<any>): Rules => ({
 //     return price_min !== '' || price_max !== '';
 // }
 
+const confirmPasswordYup = (refString: string) => {
+  return yup
+    .string()
+    .required('Nhập lại mật khẩu không được để trống')
+    .min(6, 'Mật khẩu phải có độ dài từ 6 đến 160 kí tự')
+    .max(160, 'Mật khẩu phải có độ dài từ 6 đến 160 kí tự')
+    .oneOf([yup.ref(refString)], 'Nhập lại mật khẩu không chính xác');
+};
+
 export const schema = yup.object({
   email: yup
     .string()
@@ -47,12 +56,7 @@ export const schema = yup.object({
     .required('Mật khẩu không được để trống')
     .min(6, 'Mật khẩu phải có độ dài từ 6 đến 160 kí tự')
     .max(160, 'Mật khẩu phải có độ dài từ 6 đến 160 kí tự'),
-  confirm_password: yup
-    .string()
-    .required('Nhập lại mật khẩu không được để trống')
-    .min(6, 'Mật khẩu phải có độ dài từ 6 đến 160 kí tự')
-    .max(160, 'Mật khẩu phải có độ dài từ 6 đến 160 kí tự')
-    .oneOf([yup.ref('password')], 'Nhập lại mật khẩu không chính xác'),
+  confirm_password: confirmPasswordYup('password'),
   price_min: yup.string().test({
     name: 'price-not-allowed',
     message: 'Giá không phù hợp',
@@ -85,9 +89,29 @@ export const registerSchema = schema.pick(['email', 'password', 'confirm_passwor
 export const priceFilterSchema = schema.pick(['price_min', 'price_max']);
 export const searchSchema = schema.pick(['name_search']);
 
+export const userSchema = yup.object({
+  name: yup.string().max(160, 'Tên dài tối đa 160 kí tự'),
+  phone: yup.string().max(20, 'Số điện thoại dài tối đa 20 kí tự'),
+  address: yup.string().max(160, 'Địa chỉ dài tối đa 160 kí tự'),
+  date_of_birth: yup.date().max(new Date(), 'Hãy chọn một ngày trong quá khư'),
+  avatar: yup.string().max(1000, 'Hình ảnh dài tối đa 1000 kí tự'),
+  password: schema.fields['password'] as yup.StringSchema<string | undefined, yup.AnyObject, undefined, ''>,
+  new_password: schema.fields['password'] as yup.StringSchema<string | undefined, yup.AnyObject, undefined, ''>,
+  confirm_password: confirmPasswordYup('new_password') as yup.StringSchema<
+    string | undefined,
+    yup.AnyObject,
+    undefined,
+    ''
+  >
+});
+
+export const changePasswordSchema = userSchema.pick(['password', 'new_password', 'confirm_password']);
+
 export type LoginSchema = yup.InferType<typeof loginSchema>;
 export type RegisterSchema = yup.InferType<typeof registerSchema>;
 export type PriceFilterSchema = yup.InferType<typeof priceFilterSchema>;
 export type SearchSchema = yup.InferType<typeof searchSchema>;
+export type UserSchema = yup.InferType<typeof userSchema>;
+export type ChangePasswordSchema = yup.InferType<typeof changePasswordSchema>;
 
 export type Schema = yup.InferType<typeof schema>;

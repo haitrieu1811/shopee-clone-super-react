@@ -3,9 +3,12 @@ const routes = {
   login: '/login',
   logout: '/logout',
   register: '/register',
-  profile: '/profile',
   productDetail: '/:nameId',
   cart: '/cart',
+  user: '/user/account',
+  profile: '/user/account/profile',
+  changePassword: '/user/account/password',
+  historyPurchase: '/user/account/purchase',
   notFound: '*'
 } as const;
 
