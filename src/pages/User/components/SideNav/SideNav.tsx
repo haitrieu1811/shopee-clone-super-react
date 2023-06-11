@@ -1,6 +1,7 @@
 import classNames from 'classnames';
 import { Fragment, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import PurcharseImage from 'src/assets/images/purcharse.png';
 import UserImage from 'src/assets/images/user.png';
@@ -10,6 +11,7 @@ import { AppContext } from 'src/contexts/app.context';
 import { getAvatarUrl } from 'src/utils/utils';
 
 const SideNav = () => {
+  const { t } = useTranslation('pages');
   const { profile } = useContext(AppContext);
 
   return (
@@ -23,7 +25,7 @@ const SideNav = () => {
           <div className='mt-[2px] flex items-center'>
             <PencilIcon className='mr-1 h-3 w-3 fill-[#888]' />
             <NavLink to={config.routes.profile} className='text-sm capitalize text-gray-500'>
-              Sửa hồ sơ
+              {t('profile.edit_profile')}
             </NavLink>
           </div>
         </div>
@@ -31,7 +33,7 @@ const SideNav = () => {
       <div className='mt-[27px]'>
         <NavLink to={config.routes.profile} className='mb-[15px] flex  items-center hover:text-orange'>
           <img src={UserImage} alt='Tài khoản của tôi' className='mr-[10px] h-5 w-5 flex-shrink-0 object-cover' />
-          <h3 className='text-sm font-medium capitalize'>Tài khoản của tôi</h3>
+          <h3 className='text-sm font-medium capitalize'>{t('profile.my_account')}</h3>
         </NavLink>
         <div className='pb-[3px] pl-[32px]'>
           <NavLink
@@ -43,7 +45,7 @@ const SideNav = () => {
               })
             }
           >
-            Hồ sơ
+            {t('profile.profile')}
           </NavLink>
           <NavLink
             to={config.routes.changePassword}
@@ -54,7 +56,7 @@ const SideNav = () => {
               })
             }
           >
-            Đổi mật khẩu
+            {t('profile.change_password')}
           </NavLink>
         </div>
         <NavLink
@@ -67,7 +69,7 @@ const SideNav = () => {
           }
         >
           <img src={PurcharseImage} alt='' className='mr-[10px] h-5 w-5 flex-shrink-0 object-cover' />
-          <h3 className='text-sm font-medium capitalize'>Đơn mua</h3>
+          <h3 className='text-sm font-medium capitalize'>{t('profile.my_purcharse')}</h3>
         </NavLink>
       </div>
     </Fragment>

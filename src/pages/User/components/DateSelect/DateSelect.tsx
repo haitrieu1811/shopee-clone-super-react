@@ -1,5 +1,6 @@
-import { range } from 'lodash';
+import range from 'lodash/range';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface DateSelectProps {
   value?: Date;
@@ -8,6 +9,8 @@ interface DateSelectProps {
 }
 
 const DateSelect = ({ value, onChange, errorMessage }: DateSelectProps) => {
+  const { t } = useTranslation('pages');
+
   const [date, setDate] = useState({
     date: 1,
     month: 0,
@@ -34,7 +37,7 @@ const DateSelect = ({ value, onChange, errorMessage }: DateSelectProps) => {
 
   return (
     <div className='flex items-center pb-[30px]'>
-      <div className='w-auto pr-5 text-right text-sm text-gray-500 md:w-[160px]'>Ngày sinh</div>
+      <div className='w-auto pr-5 text-right text-sm text-gray-500 md:w-[160px]'>{t('profile.date_of_birth')}</div>
       <div className='flex-1'>
         <div className='grid grid-cols-12 gap-2'>
           <select
@@ -43,7 +46,7 @@ const DateSelect = ({ value, onChange, errorMessage }: DateSelectProps) => {
             value={value?.getDate() || date.date}
             className='col-span-4 cursor-pointer rounded-sm border border-gray-300 p-2 text-sm outline-none hover:border-orange focus:border-orange'
           >
-            <option disabled>Ngày</option>
+            <option disabled>{t('profile.date')}</option>
             {range(1, 32).map((item) => (
               <option key={item} value={item}>
                 {item}
@@ -56,7 +59,7 @@ const DateSelect = ({ value, onChange, errorMessage }: DateSelectProps) => {
             value={value?.getMonth() || date.month}
             className='col-span-4 cursor-pointer rounded-sm border border-gray-300 p-2 text-sm outline-none hover:border-orange focus:border-orange'
           >
-            <option disabled>Tháng</option>
+            <option disabled>{t('profile.month')}</option>
             {range(0, 12).map((item) => (
               <option key={item} value={item}>
                 {item + 1}
@@ -69,7 +72,7 @@ const DateSelect = ({ value, onChange, errorMessage }: DateSelectProps) => {
             value={value?.getFullYear() || date.year}
             className='col-span-4 cursor-pointer rounded-sm border border-gray-300 p-2 text-sm outline-none hover:border-orange focus:border-orange'
           >
-            <option disabled>Năm</option>
+            <option disabled>{t('profile.year')}</option>
             {range(1910, 2024).map((item) => (
               <option key={item} value={item}>
                 {item}

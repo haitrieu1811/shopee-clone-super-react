@@ -1,22 +1,26 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useMutation } from '@tanstack/react-query';
+import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { useMutation } from '@tanstack/react-query';
-import { omit, isEmpty } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
+import { useContext } from 'react';
+import authApi from 'src/apis/auth.api';
+import Button from 'src/components/Button';
 import Input from 'src/components/Input';
 import config from 'src/config';
+import { AppContext } from 'src/contexts/app.context';
+import { ErrorResponse } from 'src/types/utils.type';
 import { RegisterSchema, registerSchema } from 'src/utils/rules';
 import { isEntityError } from 'src/utils/utils';
-import { ErrorResponse } from 'src/types/utils.type';
-import { useContext } from 'react';
-import { AppContext } from 'src/contexts/app.context';
-import Button from 'src/components/Button';
-import authApi from 'src/apis/auth.api';
 
 type FormData = RegisterSchema;
 
 const Register = () => {
+  const { t } = useTranslation('pages');
+
   const {
     register,
     setError,
@@ -62,12 +66,12 @@ const Register = () => {
         <div className='grid grid-cols-1 py-12 lg:grid-cols-6 lg:py-20 lg:pr-32'>
           <div className='lg:col-span-2 lg:col-start-5'>
             <form className='rounded bg-white p-8 shadow-sm' onSubmit={onSubmit} noValidate>
-              <div className='text-2xl'>Đăng ký</div>
+              <div className='text-2xl'>{t('login_register.register')}</div>
               <Input
                 type='email'
                 name='email'
                 className='mt-4'
-                placeholder='Email'
+                placeholder={t('login_register.email')}
                 register={register}
                 errorMessage={errors.email?.message}
               />
@@ -75,7 +79,7 @@ const Register = () => {
                 type='password'
                 name='password'
                 className='mt-4'
-                placeholder='Mật khẩu'
+                placeholder={t('login_register.password')}
                 register={register}
                 errorMessage={errors.password?.message}
                 autoComplete='on'
@@ -84,7 +88,7 @@ const Register = () => {
                 type='password'
                 name='confirm_password'
                 className='mt-4'
-                placeholder='Nhập lại mật khẩu'
+                placeholder={t('login_register.confirm_password')}
                 register={register}
                 errorMessage={errors.confirm_password?.message}
                 autoComplete='on'
@@ -94,13 +98,13 @@ const Register = () => {
                   className='w-full rounded-sm bg-orange py-3 text-sm uppercase text-white hover:opacity-90'
                   isLoading={registerAccountMutation.isLoading}
                 >
-                  Đăng ký
+                  {t('login_register.register')}
                 </Button>
               </div>
               <div className='mt-8 text-center text-sm'>
-                <span className='text-gray-400'>Bạn đã có tài khoản?</span>
+                <span className='text-gray-400'>{t('login_register.already_account')}</span>
                 <Link to={config.routes.login} className='ml-1 font-medium text-orange'>
-                  Đăng nhập
+                  {t('login_register.login')}
                 </Link>
               </div>
             </form>

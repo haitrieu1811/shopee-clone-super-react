@@ -1,0 +1,37 @@
+{
+  "aside_filter": {
+    "all_categories": "Tất cả danh mục",
+    "search_filter": "Bộ lọc tìm kiếm",
+    "t_shirt": "Áo thun",
+    "watch": "Đồng hồ",
+    "smart_phone": "Điện thoại",
+    "price_range": "Khoảng giá",
+    "from": "Từ",
+    "to": "Đến",
+    "apply": "Áp dụng",
+    "rating": "Đánh giá",
+    "above": "Trở lên",
+    "delete_all": "Xóa tất cả"
+  },
+  "sort_products": {
+    "sort_by": "Sắp xếp theo",
+    "lastest": "Mới nhất",
+    "popular": "Phổ biến",
+    "best_seller": "Bán chạy",
+    "price": "Giá",
+    "low_to_high": "Thấp đến cao",
+    "high_to_low": "Cao đến thấp"
+  },
+  "product_item": {
+    "sold": "Đã bán",
+    "favorite": "Yêu thích",
+    "sale": "Giảm"
+  },
+  "nav_header": {
+    "my_account": "Tài khoản của tôi",
+    "purchases": "Đơn hàng",
+    "logout": "Đăng xuất",
+    "english": "Tiếng Anh",
+    "vietnamese": "Tiếng Việt"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "main_layout": {
+    "header": {
+      "search_products": "Tìm kiếm sản phẩm",
+      "no_products": "Không có sản phẩm",
+      "new_products_added": "Sản phẩm mới thêm",
+      "view_cart": "Xem giỏ hàng"
+    }
+  },
+  "cart_layout": {
+    "header": {
+      "search_products": "Tìm trong Shopee",
+      "cart": "Giỏ hàng"
+    }
+  }
+}

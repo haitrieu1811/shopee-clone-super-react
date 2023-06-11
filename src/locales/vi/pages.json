@@ -1,0 +1,92 @@
+{
+  "login_register": {
+    "login": "Đăng nhập",
+    "email": "Email",
+    "register": "Đăng ký",
+    "password": "Mật khẩu",
+    "confirm_password": "Xác nhận mật khẩu",
+    "already_account": "Bạn đã có tài khoản?",
+    "no_account": "Bạn mới biết đến Shopee?"
+  },
+  "product_detail": {
+    "view": "Lượt xem",
+    "sold": "Đã bán",
+    "favorite": "Yêu thích",
+    "sale": "Giảm",
+    "transport": "Vận chuyển",
+    "free_shipping": "Miễn phí vận chuyển",
+    "free_shipping_for": "Miễn phí vận chuyển cho đơn hàng trên",
+    "quantity": "Số lượng",
+    "products_available": "Sản phẩm có sẵn",
+    "add_to_cart": "Thêm vào giỏ hàng",
+    "buy_now": "Mua ngay",
+    "product_description": "Mô tả sản phẩm",
+    "you_may_also_like": "Có thể bạn cũng thích"
+  },
+  "cart": {
+    "voucher_head": "Nhấn vào mục Mã giảm giá ở cuối trang để hưởng miễn phí vận chuyển bạn nhé!",
+    "product": "Sản phẩm",
+    "products": "Sản phẩm",
+    "price": "Đơn giá",
+    "quantity": "Số lượng",
+    "total": "Số tiền",
+    "actions": "Thao tác",
+    "delete": "Xóa",
+    "select_all": "Chọn tất cả",
+    "total_payment": "Tổng thanh toán",
+    "items": "Sản phẩm",
+    "checkout": "Mua hàng",
+    "save": "Tiết kiệm",
+    "cart_empty": "Giỏ hàng của bạn đang trống",
+    "promotion_details": "Chi tiết khuyến mãi",
+    "total_purcharses": "Tổng đơn hàng",
+    "product_discounts": "Giảm giá sản phẩm",
+    "total_money": "Tổng tiền",
+    "final_amount": "Số tiền cuối cùng thanh toán",
+    "buy_purcharses": "Mua hàng"
+  },
+  "profile": {
+    "edit_profile": "Sửa hồ sơ",
+    "my_account": "Tài khoản của tôi",
+    "profile": "Hồ sơ",
+    "change_password": "Đổi mật khẩu",
+    "my_purcharse": "Đơn hàng",
+    "my_profile": "Hồ sơ của tôi",
+    "my_profile_description": "Quản lý thông tin hồ sơ để bảo mật tài khoản",
+    "email": "Email",
+    "name": "Tên",
+    "phone_number": "Số điện thoại",
+    "date_of_birth": "Ngày sinh",
+    "address": "Địa chỉ",
+    "save": "Lưu",
+    "select_image": "Chọn ảnh",
+    "max_file_size": "Dung lượng file tối đa 1 MB",
+    "file_extension": "Định dạng:.JPEG, .PNG",
+    "date": "Ngày",
+    "month": "Thấng",
+    "year": "Năm"
+  },
+  "change_password": {
+    "change_password": "Đổi mật khẩu",
+    "change_password_description": "Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác",
+    "old_password": "Mật khẩu cũ",
+    "new_password": "Mật khẩu mới",
+    "confirm_password": "Xác nhận mật khẩu",
+    "confirm": "Xác nhận"
+  },
+  "history_purcharses": {
+    "all": "Tất cả",
+    "to_confirm": "Chờ xác nhận",
+    "to_get": "Chờ lấy hàng",
+    "to_ship": "Đang giao",
+    "completed": "Hoàn thành",
+    "cancelled": "Đã hủy",
+    "order_total": "Thành tiền",
+    "buy_again": "Mua lại",
+    "no_purchases": "Chưa có đơn hàng"
+  },
+  "not_found": {
+    "missing": "Có vẻ như thiếu một cái gì đó",
+    "back_home": "Trở về trang chủ"
+  }
+}

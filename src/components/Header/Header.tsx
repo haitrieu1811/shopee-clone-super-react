@@ -13,7 +13,7 @@ const Header = () => {
       <div className='container'>
         <NavHeader />
       </div>
-      <nav className='container flex flex-wrap items-center justify-between pb-[10px] pt-4'>
+      <nav className='container flex flex-wrap items-center justify-between py-4'>
         <Link to={config.routes.home} className='flex w-full justify-center md:block md:w-auto'>
           <Logo className='block w-[162px] fill-white' />
         </Link>

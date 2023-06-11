@@ -1,20 +1,23 @@
 import { yupResolver } from '@hookform/resolvers/yup';
+import isEmpty from 'lodash/isEmpty';
+import omit from 'lodash/omit';
 import { useForm } from 'react-hook-form';
-import { isEmpty, omit } from 'lodash';
+import { useTranslation } from 'react-i18next';
 
+import { useMutation } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
+import userApi from 'src/apis/user.api';
 import Button from 'src/components/Button';
 import Input from 'src/components/Input';
-import { ChangePasswordSchema, changePasswordSchema } from 'src/utils/rules';
-import Heading from '../../components/Heading';
-import { useMutation } from '@tanstack/react-query';
-import userApi from 'src/apis/user.api';
-import { toast } from 'react-toastify';
-import { isEntityError } from 'src/utils/utils';
 import { ErrorResponse } from 'src/types/utils.type';
+import { ChangePasswordSchema, changePasswordSchema } from 'src/utils/rules';
+import { isEntityError } from 'src/utils/utils';
+import Heading from '../../components/Heading';
 
 type ChangePasswordFormData = ChangePasswordSchema;
 
 const ChangePassword = () => {
+  const { t } = useTranslation('pages');
   const {
     register,
     formState: { errors },
@@ -63,13 +66,13 @@ const ChangePassword = () => {
     <div className='h-[585px] rounded-sm bg-white px-[30px] pb-[10px] shadow'>
       <div className='border-b-[1px] border-b-gray-200 py-[18px]'>
         <Heading
-          title='Đổi mật khẩu'
-          description='Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác'
+          title={t('change_password.change_password')}
+          description={t('change_password.change_password_description')}
         />
       </div>
       <form className='pt-[25px]' onSubmit={onSubmit}>
         <div className='flex items-center'>
-          <div className='w-[224px] text-right text-sm text-black/[0.65]'>Mật khẩu cũ</div>
+          <div className='w-[224px] text-right text-sm text-black/[0.65]'>{t('change_password.old_password')}</div>
           <Input
             type='password'
             name='password'
@@ -79,7 +82,7 @@ const ChangePassword = () => {
           />
         </div>
         <div className='mt-3 flex items-center'>
-          <div className='w-[224px] text-right text-sm text-black/[0.65]'>Mật khẩu mới</div>
+          <div className='w-[224px] text-right text-sm text-black/[0.65]'>{t('change_password.new_password')}</div>
           <Input
             type='password'
             name='new_password'
@@ -89,7 +92,7 @@ const ChangePassword = () => {
           />
         </div>
         <div className='mt-3 flex items-center'>
-          <div className='w-[224px] text-right text-sm text-black/[0.65]'>Xác nhận mật khẩu</div>
+          <div className='w-[224px] text-right text-sm text-black/[0.65]'>{t('change_password.confirm_password')}</div>
           <Input
             type='password'
             name='confirm_password'
@@ -104,7 +107,7 @@ const ChangePassword = () => {
             isLoading={changePasswordMutation.isLoading}
             className='ml-5 h-10 rounded-sm bg-orange px-5 text-sm capitalize text-white'
           >
-            Xác nhận
+            {t('change_password.confirm')}
           </Button>
         </div>
       </form>

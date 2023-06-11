@@ -1,0 +1,37 @@
+{
+  "aside_filter": {
+    "all_categories": "All categories",
+    "search_filter": "Search filter",
+    "t_shirt": "T-Shirt",
+    "watch": "Watch",
+    "smart_phone": "Smart phone",
+    "price_range": "Price range",
+    "from": "From",
+    "to": "To",
+    "apply": "Apply",
+    "rating": "Rating",
+    "above": "Above",
+    "delete_all": "Delete all"
+  },
+  "sort_products": {
+    "sort_by": "Sort by",
+    "lastest": "Latest",
+    "popular": "Popular",
+    "best_seller": "Top sales",
+    "price": "Price",
+    "low_to_high": "Low to high",
+    "high_to_low": "High to low"
+  },
+  "product_item": {
+    "sold": "Sold",
+    "favorite": "Favorite",
+    "sale": "Sale"
+  },
+  "nav_header": {
+    "my_account": "My account",
+    "purchases": "My purchases",
+    "logout": "Logout",
+    "english": "English",
+    "vietnamese": "Vietnamese"
+  }
+}

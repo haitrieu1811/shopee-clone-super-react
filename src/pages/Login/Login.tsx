@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import authApi from 'src/apis/auth.api';
 import Button from 'src/components/Button';
@@ -16,6 +17,8 @@ import { isEntityError } from 'src/utils/utils';
 type FormData = LoginSchema;
 
 const Login = () => {
+  const { t } = useTranslation('pages');
+
   const {
     register,
     setError,
@@ -60,12 +63,12 @@ const Login = () => {
         <div className='grid grid-cols-1 py-12 lg:grid-cols-6 lg:py-20 lg:pr-32'>
           <div className='lg:col-span-2 lg:col-start-5'>
             <form className='rounded bg-white p-8 shadow-sm' onSubmit={onSubmit} noValidate>
-              <div className='text-2xl'>Đăng nhập</div>
+              <div className='text-2xl'>{t('login_register.login')}</div>
               <Input
                 type='email'
                 name='email'
                 className='mt-6'
-                placeholder='Email'
+                placeholder={t('login_register.email')}
                 register={register}
                 errorMessage={errors.email?.message}
               />
@@ -73,7 +76,7 @@ const Login = () => {
                 type='password'
                 name='password'
                 className='mt-6'
-                placeholder='Mật khẩu'
+                placeholder={t('login_register.password')}
                 register={register}
                 errorMessage={errors.password?.message}
               />
@@ -82,13 +85,13 @@ const Login = () => {
                   className='w-full rounded-sm bg-orange py-3 text-sm uppercase text-white hover:opacity-90'
                   isLoading={loginMutation.isLoading}
                 >
-                  Đăng nhập
+                  {t('login_register.login')}
                 </Button>
               </div>
               <div className='mt-6 text-center text-sm text-gray-400'>
-                Bạn mới biết đến Shopee?
+                {t('login_register.no_account')}
                 <Link to={config.routes.register} className='ml-1 font-medium text-orange'>
-                  Đăng ký
+                  {t('login_register.register')}
                 </Link>
               </div>
             </form>

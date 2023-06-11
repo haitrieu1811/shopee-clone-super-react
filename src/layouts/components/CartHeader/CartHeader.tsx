@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { SearchIcon } from 'src/components/Icons';
 import Logo from 'src/components/Logo';
@@ -7,6 +8,8 @@ import config from 'src/config';
 import useSearchProducts from 'src/hooks/useSearchProducts';
 
 const CartHeader = () => {
+  const { t } = useTranslation('layouts');
+
   const { onSubmit, register } = useSearchProducts();
 
   return (
@@ -21,12 +24,12 @@ const CartHeader = () => {
           <Link to={config.routes.home} className='flex w-full items-end justify-center lg:w-auto'>
             <Logo className='w-[128px] fill-orange' />
             <div className='mx-[15px] h-[30px] w-[0.5px] bg-orange'></div>
-            <div className='text-xl capitalize text-orange'>Giỏ hàng</div>
+            <div className='text-xl capitalize text-orange'>{t('cart_layout.header.cart')}</div>
           </Link>
           <form className='mt-5 flex h-[40px] w-full lg:mt-0 lg:w-auto' onSubmit={onSubmit}>
             <input
               type='text'
-              placeholder='Tìm trong Shopee'
+              placeholder={t('cart_layout.header.search_products')}
               className='w-full rounded-bl-sm rounded-tl-sm border-2 border-orange px-[10px] text-sm outline-none lg:w-[538px]'
               {...register('name_search')}
             />

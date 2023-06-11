@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import defaultAvatar from 'src/assets/images/default-avatar.jpg';
 import config from 'src/config';
 import HttpStatusCode from 'src/constants/httpStatusCode';
+import { ErrorResponse } from 'src/types/utils.type';
 
 export const isAxiosError = <T>(error: unknown): error is AxiosError<T> => {
   // eslint-disable-next-line import/no-named-as-default-member
@@ -11,6 +12,17 @@ export const isAxiosError = <T>(error: unknown): error is AxiosError<T> => {
 
 export const isEntityError = <FormError>(error: unknown): error is AxiosError<FormError> => {
   return isAxiosError(error) && error.response?.status === HttpStatusCode.UnprocessableEntity;
+};
+
+export const isUnauthorizedError = <UnauthorizedError>(error: unknown): error is AxiosError<UnauthorizedError> => {
+  return isAxiosError(error) && error.response?.status === HttpStatusCode.Unauthorized;
+};
+
+export const isExpiredError = <UnauthorizedError>(error: unknown): error is AxiosError<UnauthorizedError> => {
+  return (
+    isUnauthorizedError<ErrorResponse<{ message: string; name: string }>>(error) &&
+    error.response?.data.data?.name === 'EXPIRED_TOKEN'
+  );
 };
 
 export const formatCurrency = (currency: number) => {
@@ -47,4 +59,12 @@ export const getIdFromNameId = (nameId: string) => {
 
 export const getAvatarUrl = (imageName?: string) => {
   return imageName ? `${config.app.baseUrl}images/${imageName}` : defaultAvatar;
+};
+
+export const setLanguageToLS = (lang: string) => {
+  localStorage.setItem('language', lang);
+};
+
+export const getLanguageFromLS = () => {
+  return localStorage.getItem('language') || 'vi';
 };

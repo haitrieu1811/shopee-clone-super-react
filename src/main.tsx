@@ -7,7 +7,9 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import App from './App.tsx';
 import './index.css';
 import AppProvider from './contexts/app.context.tsx';
-import ScrollToTop from './components/ScrollToTop/ScrollToTop.tsx';
+import ScrollToTop from './components/ScrollToTop';
+import ErrorBoundary from './components/ErrorBoundary';
+import './i18n/i18n.ts';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,7 +26,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <QueryClientProvider client={queryClient}>
         <AppProvider>
           <ScrollToTop>
-            <App />
+            <ErrorBoundary>
+              <App />
+            </ErrorBoundary>
           </ScrollToTop>
         </AppProvider>
         <ReactQueryDevtools />

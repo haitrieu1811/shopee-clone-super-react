@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { Fragment, useContext, useMemo } from 'react';
 import { Link } from 'react-router-dom';
@@ -15,6 +16,8 @@ import Poppover from '../Poppover';
 const MAX_PURCHASES = 5;
 
 const Cart = () => {
+  const { t } = useTranslation('layouts');
+
   const { isAuthenticated } = useContext(AppContext);
 
   const getCartListQuery = useQuery({
@@ -43,12 +46,14 @@ const Cart = () => {
           <div className='w-[400px]'>
             {isAuthenticated && cartList && cartList.length > 0 ? (
               <Fragment>
-                <h2 className='p-3 text-[15px] capitalize text-gray-400'>Sản phẩm mới thêm</h2>
+                <h2 className='p-3 text-[15px] capitalize text-gray-400'>
+                  {t('main_layout.header.new_products_added')}
+                </h2>
                 <div>
                   {cartList.slice(0, MAX_PURCHASES).map((cartItem) => (
                     <Link
                       key={cartItem._id}
-                      to={`/${generateNameId({
+                      to={`/product/${generateNameId({
                         name: cartItem.product.name,
                         id: cartItem.product._id
                       })}`}
@@ -72,16 +77,16 @@ const Cart = () => {
                   </div>
                   <Link
                     to={config.routes.cart}
-                    className='rounded-sm bg-orange px-4 py-[6px] text-[15px] text-white hover:bg-[#f05d40]'
+                    className='rounded-sm bg-orange px-4 py-[6px] text-[15px] capitalize text-white hover:bg-[#f05d40]'
                   >
-                    Xem giỏ hàng
+                    {t('main_layout.header.view_cart')}
                   </Link>
                 </div>
               </Fragment>
             ) : (
               <div className='flex h-[260px] flex-col items-center justify-center'>
                 <img src={CartEmpty} alt='' className='h-[100px] w-[100px] object-cover' />
-                <p className='mt-4 text-[15px] capitalize text-gray-500'>Chưa có sản phẩm</p>
+                <p className='mt-4 text-[15px] capitalize text-gray-500'>{t('main_layout.header.no_products')}</p>
               </div>
             )}
           </div>

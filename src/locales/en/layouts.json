@@ -1,0 +1,16 @@
+{
+  "main_layout": {
+    "header": {
+      "search_products": "Search products",
+      "no_products": "No products",
+      "new_products_added": "Recently added products",
+      "view_cart": "View my shopping cart"
+    }
+  },
+  "cart_layout": {
+    "header": {
+      "search_products": "Search in Shopee",
+      "cart": "Shopping cart"
+    }
+  }
+}

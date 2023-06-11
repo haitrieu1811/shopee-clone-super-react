@@ -1,9 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 import { Fragment, memo, useContext } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { createSearchParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import Button from 'src/components/Button';
 import { BarIcon, FilterIcon, StartEmptyIcon, StartFillIcon } from 'src/components/Icons';
@@ -19,6 +20,8 @@ type FormData = NoUndefinedField<PriceFilterSchema>;
 
 const AsideFilter = () => {
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const { categoryList, queryConfig } = useContext(HomeContext);
 
@@ -70,7 +73,7 @@ const AsideFilter = () => {
       <div className='mb-[30px]'>
         <h1 className='mb-[10px] flex items-center border-b border-b-gray-200 pb-4'>
           <BarIcon className='mr-3 w-[12px]' />
-          <span className='font-semibold capitalize text-black'>Tất cả danh mục</span>
+          <span className='font-semibold capitalize text-black'>{t('aside_filter.all_categories')}</span>
         </h1>
         {categoryList?.map((category) => (
           <CategoryItem key={category._id} category={category} />
@@ -79,10 +82,10 @@ const AsideFilter = () => {
       <div className='mb-[30px]'>
         <div className='flex items-center pb-4'>
           <FilterIcon className='mr-3 w-[12px] stroke-black' />
-          <span className='font-semibold uppercase text-black'>Bộ lọc tìm kiếm</span>
+          <span className='font-semibold uppercase text-black'>{t('aside_filter.search_filter')}</span>
         </div>
         <div className='mb-6'>
-          <div className='text-sm font-medium'>Khoảng giá</div>
+          <div className='text-sm font-medium'>{t('aside_filter.price_range')}</div>
           <form onSubmit={onSubmit}>
             <div className='mt-5 flex items-center justify-between'>
               <InputV2
@@ -91,7 +94,7 @@ const AsideFilter = () => {
                 name='price_min'
                 classNameInput='h-[30px] w-[80px] rounded-sm border border-gray-300 p-2 text-sm outline-none'
                 classNameError='hidden'
-                placeholder='TỪ'
+                placeholder={t('aside_filter.from')}
                 onChange={() => {
                   trigger('price_max');
                 }}
@@ -103,7 +106,7 @@ const AsideFilter = () => {
                 render={({ field }) => (
                   <InputNumber
                     type='text'
-                    placeholder='ĐẾN'
+                    placeholder={t('aside_filter.to')}
                     name='price_max'
                     classNameInput='h-[30px] w-[80px] rounded-sm border border-gray-300 p-2 text-sm outline-none'
                     onChange={(e) => {
@@ -117,11 +120,13 @@ const AsideFilter = () => {
               />
             </div>
             <div className='mb-4 mt-2 text-center text-sm text-red-500'>{errors.price_min?.message}</div>
-            <Button className='w-full rounded-sm bg-orange py-[6px] text-sm uppercase text-white'>Áp dụng</Button>
+            <Button className='w-full rounded-sm bg-orange py-[6px] text-sm uppercase text-white'>
+              {t('aside_filter.apply')}
+            </Button>
           </form>
         </div>
         <div className='mt-4'>
-          <div className='mb-2 text-sm font-medium capitalize'>Đánh giá</div>
+          <div className='mb-2 text-sm font-medium capitalize'>{t('aside_filter.rating')}</div>
           {Array(5)
             .fill(0)
             .map((_, index) => (
@@ -143,7 +148,7 @@ const AsideFilter = () => {
                     }
                     return <StartEmptyIcon key={indexStar} className='mr-1 h-[14px] w-[14px] fill-[#ffa727]' />;
                   })}
-                {index !== 0 && <span className='ml-1 text-sm text-gray-500'>trở lên</span>}
+                {index !== 0 && <span className='ml-1 text-sm lowercase text-gray-500'>{t('aside_filter.above')}</span>}
               </div>
             ))}
         </div>
@@ -155,7 +160,7 @@ const AsideFilter = () => {
         role='button'
         aria-hidden='true'
       >
-        Xóa tất cả
+        {t('aside_filter.delete_all')}
       </div>
     </Fragment>
   );

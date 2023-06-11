@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 
 import Input from 'src/components/Input';
 import InputNumber from 'src/components/InputNumber';
@@ -7,6 +8,7 @@ import { UpdateProfileFormData } from '../../pages/Profile/Profile';
 import DateSelect from '../DateSelect';
 
 const Info = () => {
+  const { t } = useTranslation('pages');
   const {
     control,
     register,
@@ -16,20 +18,26 @@ const Info = () => {
   return (
     <Fragment>
       <div className='flex items-center pb-[30px]'>
-        <div className='w-auto pr-5 text-right text-sm text-gray-500 md:w-[160px]'>Tên</div>
+        <div className='w-auto pr-5 text-right text-sm text-gray-500 md:w-[160px]'>{t('profile.name')}</div>
         <div className='flex-1 text-sm'>
-          <Input type='text' placeholder='Họ tên' name='name' register={register} errorMessage={errors.name?.message} />
+          <Input
+            type='text'
+            placeholder={t('profile.name')}
+            name='name'
+            register={register}
+            errorMessage={errors.name?.message}
+          />
         </div>
       </div>
       <div className='flex items-center pb-[30px]'>
-        <div className='w-auto pr-5 text-right text-sm text-gray-500 md:w-[160px]'>Số điện thoại</div>
+        <div className='w-auto pr-5 text-right text-sm text-gray-500 md:w-[160px]'>{t('profile.phone_number')}</div>
         <div className='flex-1 text-sm'>
           <Controller
             control={control}
             name='phone'
             render={({ field }) => (
               <InputNumber
-                placeholder='Số điện thoại'
+                placeholder={t('profile.phone_number')}
                 errorMessage={errors.phone?.message}
                 {...field}
                 onChange={field.onChange}
@@ -39,12 +47,12 @@ const Info = () => {
         </div>
       </div>
       <div className='flex items-center pb-[30px]'>
-        <div className='w-auto pr-5 text-right text-sm text-gray-500 md:w-[160px]'>Địa chỉ</div>
+        <div className='w-auto pr-5 text-right text-sm text-gray-500 md:w-[160px]'>{t('profile.address')}</div>
         <div className='flex-1 text-sm'>
           <Input
             type='text'
             name='address'
-            placeholder='Địa chỉ'
+            placeholder={t('profile.address')}
             register={register}
             errorMessage={errors.address?.message}
           />

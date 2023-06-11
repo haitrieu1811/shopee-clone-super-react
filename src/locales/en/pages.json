@@ -1,0 +1,92 @@
+{
+  "login_register": {
+    "login": "Login",
+    "email": "Email",
+    "register": "Register",
+    "password": "Password",
+    "confirm_password": "Confirm password",
+    "already_account": "You already have an account?",
+    "no_account": "New to Shopee?"
+  },
+  "product_detail": {
+    "view": "Views",
+    "sold": "Sold",
+    "favorite": "Favorite",
+    "sale": "Sale",
+    "transport": "Transport",
+    "free_shipping": "Free shipping",
+    "free_shipping_for": "Free shipping on orders above",
+    "quantity": "Quantity",
+    "products_available": "Products available",
+    "add_to_cart": "Add to cart",
+    "buy_now": "Buy now",
+    "product_description": "Product description",
+    "you_may_also_like": "You may also like"
+  },
+  "cart": {
+    "voucher_head": "Select free shipping voucher below to enjoy shipping discount",
+    "product": "Product",
+    "products": "Products",
+    "price": "Unit price",
+    "quantity": "Quantity",
+    "total": "Total price",
+    "actions": "Actions",
+    "delete": "Delete",
+    "select_all": "Select all",
+    "total_payment": "Total",
+    "items": "Items",
+    "checkout": "Checkout",
+    "save": "Saved",
+    "cart_empty": "Your cart is empty",
+    "promotion_details": "Discount detail",
+    "total_purcharses": "Subtotal",
+    "product_discounts": "Product discount",
+    "total_money": "Total amount",
+    "final_amount": "Final price shown at checkout",
+    "buy_purcharses": "Buy purcharses"
+  },
+  "profile": {
+    "edit_profile": "Edit profile",
+    "my_account": "My account",
+    "profile": "Profile",
+    "change_password": "Change password",
+    "my_purcharse": "My purcharse",
+    "my_profile": "My profile",
+    "my_profile_description": "Manage and protect your account",
+    "email": "Email",
+    "name": "Name",
+    "phone_number": "Phone number",
+    "date_of_birth": "Date of birth",
+    "address": "Address",
+    "save": "Save",
+    "select_image": "Select image",
+    "max_file_size": "File size: maximum 1 MB",
+    "file_extension": "File extension: .JPEG, .PNG",
+    "date": "Date",
+    "month": "Month",
+    "year": "Year"
+  },
+  "change_password": {
+    "change_password": "Change password",
+    "change_password_description": "For your account's security, do not share your password with anyone else",
+    "old_password": "Old password",
+    "new_password": "New password",
+    "confirm_password": "Confirm password",
+    "confirm": "Confirm"
+  },
+  "history_purcharses": {
+    "all": "All",
+    "to_confirm": "To confirm",
+    "to_get": "To get",
+    "to_ship": "To ship",
+    "completed": "Completed",
+    "cancelled": "Cancelled",
+    "order_total": "Order total",
+    "buy_again": "Buy again",
+    "no_purchases": "You do not have any Return Refund case"
+  },
+  "not_found": {
+    "missing": "It looks like something is missing",
+    "back_home": "Back home"
+  }
+}

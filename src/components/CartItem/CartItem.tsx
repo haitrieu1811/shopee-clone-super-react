@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import event2Image from 'src/assets/images/event-small-2.png';
 import eventImage from 'src/assets/images/event-small.png';
@@ -28,6 +29,8 @@ const CartItem = ({
   handleTypeQuantity,
   handleDelete
 }: CartItemProps) => {
+  const { t } = useTranslation('pages');
+
   return (
     <div className='container grid grid-cols-12 rounded-sm border-b border-b-gray-200 bg-white p-5 text-sm shadow-sm last:border-b-0'>
       <div className='col-span-6'>
@@ -38,7 +41,7 @@ const CartItem = ({
           <div className='col-span-11 text-[#000000cc]'>
             <div className='flex items-start'>
               <Link
-                to={`/${generateNameId({
+                to={`/product/${generateNameId({
                   name: cartItem.product.name,
                   id: cartItem.product._id
                 })}`}
@@ -52,7 +55,7 @@ const CartItem = ({
               </Link>
               <div className='ml-3'>
                 <Link
-                  to={`/${generateNameId({
+                  to={`/product/${generateNameId({
                     name: cartItem.product.name,
                     id: cartItem.product._id
                   })}`}
@@ -95,7 +98,7 @@ const CartItem = ({
             {formatCurrency(cartItem.price * cartItem.buy_count)}
           </div>
           <div className='col-span-2 flex items-center justify-center text-black/[87]'>
-            <button onClick={() => handleDelete([cartItem._id])}>Xóa</button>
+            <button onClick={() => handleDelete([cartItem._id])}>{t('cart.delete')}</button>
           </div>
         </div>
       </div>

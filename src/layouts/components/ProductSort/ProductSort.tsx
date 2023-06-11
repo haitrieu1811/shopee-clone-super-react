@@ -1,9 +1,10 @@
 import { FloatingPortal, shift, useFloating } from '@floating-ui/react';
 import classNames from 'classnames';
 import { motion } from 'framer-motion';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 import { useContext, useState } from 'react';
 import { Link, createSearchParams, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { ChevronDownIcon, NextIcon, PrevIcon } from 'src/components/Icons';
 import config from 'src/config';
@@ -13,6 +14,8 @@ import { ProductListParamsType } from 'src/types/product.type';
 
 const ProductSort = () => {
   const navigate = useNavigate();
+
+  const { t } = useTranslation();
 
   const { pageSize, queryConfig } = useContext(HomeContext);
   const page = Number(queryConfig.page);
@@ -70,7 +73,7 @@ const ProductSort = () => {
   return (
     <div className='mb-3 flex items-center justify-between rounded-sm bg-[#00000008] px-5 py-[13px]'>
       <div className='flex items-center'>
-        <span className='mr-4 text-sm text-gray-600'>Sắp xếp theo</span>
+        <span className='mr-4 text-sm text-gray-600'>{t('sort_products.sort_by')}</span>
         <button
           onClick={() => handleSort(sortBy.createdAt)}
           className={classNames('mr-3 rounded-sm px-4 py-2 text-sm capitalize shadow-sm', {
@@ -78,7 +81,7 @@ const ProductSort = () => {
             'bg-white text-black': !isActiveSortBy(sortBy.createdAt)
           })}
         >
-          Mới nhất
+          {t('sort_products.lastest')}
         </button>
         <button
           onClick={() => handleSort(sortBy.view)}
@@ -87,7 +90,7 @@ const ProductSort = () => {
             'bg-white text-black': !isActiveSortBy(sortBy.view)
           })}
         >
-          Phổ biến
+          {t('sort_products.popular')}
         </button>
         <button
           onClick={() => handleSort(sortBy.sold)}
@@ -96,7 +99,7 @@ const ProductSort = () => {
             'bg-white text-black': !isActiveSortBy(sortBy.sold)
           })}
         >
-          Bán chạy
+          {t('sort_products.best_seller')}
         </button>
         <div
           ref={refs.setReference}
@@ -104,7 +107,7 @@ const ProductSort = () => {
           onMouseEnter={showSelect}
           onMouseLeave={hideSelect}
         >
-          <span className='text-sm text-gray-700'>Giá</span>
+          <span className='text-sm text-gray-700'>{t('sort_products.price')}</span>
           <ChevronDownIcon className='w-3' />
 
           <FloatingPortal>
@@ -129,7 +132,7 @@ const ProductSort = () => {
                     'cursor-not-allowed text-orange': isActiveOrderPrice(orderConstant.asc)
                   })}
                 >
-                  Giá: Thấp đến Cao
+                  {t('sort_products.price')}: {t('sort_products.low_to_high')}
                 </button>
                 <button
                   onClick={() => handleOrderPrice(orderConstant.desc)}
@@ -137,7 +140,7 @@ const ProductSort = () => {
                     'cursor-not-allowed text-orange': isActiveOrderPrice(orderConstant.desc)
                   })}
                 >
-                  Giá: Cao đến Thấp
+                  {t('sort_products.price')}: {t('sort_products.high_to_low')}
                 </button>
               </motion.div>
             )}

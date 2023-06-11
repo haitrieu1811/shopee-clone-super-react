@@ -1,11 +1,13 @@
 import { Fragment, useRef } from 'react';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 interface InputFileProps {
   onChange?: (value?: File) => void;
 }
 
 const InputFile = ({ onChange }: InputFileProps) => {
+  const { t } = useTranslation('pages');
   const fileImageRef = useRef<HTMLInputElement>(null);
 
   const handleUpload = () => {
@@ -39,9 +41,9 @@ const InputFile = ({ onChange }: InputFileProps) => {
       <button
         type='button'
         onClick={handleUpload}
-        className='cursor-pointer rounded-sm border border-gray-300 px-5 py-2 text-sm text-gray-500 hover:bg-[#00000005]'
+        className='cursor-pointer rounded-sm border border-gray-300 px-5 py-2 text-sm capitalize text-gray-500 hover:bg-[#00000005]'
       >
-        Chọn Ảnh
+        {t('profile.select_image')}
       </button>
     </Fragment>
   );

@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
 
 import DOMPurify from 'dompurify';
 import productApi from 'src/apis/product.api';
@@ -21,6 +22,8 @@ import config from 'src/config';
 
 const ProductDetail = () => {
   const navigate = useNavigate();
+
+  const { t } = useTranslation('pages');
 
   const queryClient = useQueryClient();
 
@@ -206,7 +209,7 @@ const ProductDetail = () => {
               <div className='flex items-center'>
                 {productData.sold > 500 && (
                   <span className='mr-4 flex-shrink-0 rounded-sm bg-orange px-1 py-[2px] text-xs font-medium capitalize text-white'>
-                    Yêu thích
+                    {t('product_detail.favorite')}
                   </span>
                 )}
                 <h1 className='line-clamp-2 text-xl font-medium' title={productData.name}>
@@ -232,11 +235,11 @@ const ProductDetail = () => {
                   <div className='mr-[5px] border-b-[1px] border-b-black' title={String(productData.view)}>
                     {formatNumberToSocialStyle(productData.view)}
                   </div>
-                  <div className='text-sm capitalize text-gray-500'>Lượt xem</div>
+                  <div className='text-sm capitalize text-gray-500'>{t('product_detail.view')}</div>
                 </div>
                 <div className='flex items-center px-[15px]' title={String(productData.sold)}>
                   <div className='mr-[5px]'>{formatNumberToSocialStyle(productData.sold)}</div>
-                  <div className='text-sm capitalize text-gray-500'>Đã bán</div>
+                  <div className='text-sm capitalize text-gray-500'>{t('product_detail.sold')}</div>
                 </div>
               </div>
               {/* Giá sản phẩm */}
@@ -251,24 +254,24 @@ const ProductDetail = () => {
                 </div>
                 {rateSale(productData.price_before_discount, productData.price) > 0 && (
                   <span className='ml-[15px] flex-shrink-0 rounded-sm bg-orange px-1 py-[2px] text-xs font-medium uppercase text-white'>
-                    {rateSale(productData.price_before_discount, productData.price)}% giảm
+                    {rateSale(productData.price_before_discount, productData.price)}% {t('product_detail.sale')}
                   </span>
                 )}
               </div>
               {/* Vận chuyển */}
               <div className='mt-[50px] flex items-start'>
-                <div className='mr-[50px] text-sm text-slate-500'>Vận chuyển</div>
+                <div className='mr-[50px] text-sm text-slate-500'>{t('product_detail.transport')}</div>
                 <div className='flex items-start'>
                   <img src={FreeShipImage} alt='Free ship' className='w-[25px]' />
                   <div className='ml-[10px]'>
-                    <h3 className='mb-1 text-sm font-medium'>Miễn phí vận chuyển</h3>
-                    <p className='text-sm text-gray-500'>Miễn phí vận chuyển cho đơn hàng trên ₫99.000</p>
+                    <h3 className='mb-1 text-sm font-medium'>{t('product_detail.free_shipping')}</h3>
+                    <p className='text-sm text-gray-500'>{t('product_detail.free_shipping_for')} ₫99.000</p>
                   </div>
                 </div>
               </div>
               {/* Input nhập số lượng sản phẩm cần mua */}
               <div className='mt-[25px] flex items-center'>
-                <div className='mr-[50px] text-sm text-slate-500'>Số lượng</div>
+                <div className='mr-[50px] text-sm text-slate-500'>{t('product_detail.quantity')}</div>
                 <QuantityController
                   onDecrease={handleChangeBuyCount}
                   onIncrease={handleChangeBuyCount}
@@ -276,7 +279,9 @@ const ProductDetail = () => {
                   value={buyCount}
                   max={productData.quantity}
                 />
-                <div className='ml-4 text-sm text-slate-500'>{productData.quantity} sản phẩm có sẵn</div>
+                <div className='ml-4 text-sm text-slate-500'>
+                  {productData.quantity} {t('product_detail.products_available')}
+                </div>
               </div>
               {/* Thêm và mua sản phẩm */}
               <div className='mt-[50px] flex'>
@@ -285,20 +290,22 @@ const ProductDetail = () => {
                   onClick={handleAddToCart}
                 >
                   <AddCartIcon className='mr-[10px] h-5 w-5 fill-transparent stroke-orange' />
-                  <span className='capitalize text-orange'>Thêm vào giỏ hàng</span>
+                  <span className='capitalize text-orange'>{t('product_detail.add_to_cart')}</span>
                 </Button>
                 <Button
                   onClick={buyNow}
                   className='rounded-sm border-[1px] border-orange bg-orange px-5 py-[10px] hover:bg-[#f05d40]'
                 >
-                  <span className='capitalize text-white'>Mua ngay</span>
+                  <span className='capitalize text-white'>{t('product_detail.buy_now')}</span>
                 </Button>
               </div>
             </div>
           </div>
           {/* Mô tả sản phẩm */}
           <div className='mt-[15px] rounded-sm bg-white p-[25px] shadow-sm'>
-            <h2 className='mb-[24px] bg-[#f5f5f5] p-[14px] text-lg uppercase'>Mô tả sản phẩm</h2>
+            <h2 className='mb-[24px] bg-[#f5f5f5] p-[14px] text-lg uppercase'>
+              {t('product_detail.product_description')}
+            </h2>
             <div
               className='px-[14px] text-sm leading-loose text-black/80'
               dangerouslySetInnerHTML={{
@@ -309,7 +316,7 @@ const ProductDetail = () => {
           {/* Sản phẩm liên quan */}
           {productListRelated && productListRelated.length > 0 && (
             <div className='my-10'>
-              <h2 className='mb-4 font-medium uppercase text-[#00000089]'>Có thể bạn cũng thích</h2>
+              <h2 className='mb-4 font-medium uppercase text-[#00000089]'>{t('product_detail.you_may_also_like')}</h2>
               <ProductList
                 productList={productListRelated}
                 pagination={false}
