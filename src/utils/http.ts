@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import { toast } from 'react-toastify';
 
 import { URL_LOGIN, URL_LOGOUT, URL_REFRESH_TOKEN, URL_REGISTER } from 'src/apis/auth.api';
@@ -83,7 +83,7 @@ class Http {
         }
         // Lỗi 401 (Sai, thiếu hoặc hết hạn access token)
         if (isUnauthorizedError<ErrorResponse<{ name: string; message: string }>>(error)) {
-          const config = error.response?.config || {};
+          const config = error.response?.config || ({ headers: {} } as InternalAxiosRequestConfig);
           const { url } = config;
           // Khi access token hết hạn và không phải request từ refresh access token
           if (isExpiredError(error) && url !== URL_REFRESH_TOKEN) {
