@@ -2,11 +2,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMutation } from '@tanstack/react-query';
 import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
-import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-
 import { useContext } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
+import { Link, useNavigate } from 'react-router-dom';
+
 import authApi from 'src/apis/auth.api';
 import Button from 'src/components/Button';
 import Input from 'src/components/Input';
@@ -62,6 +63,10 @@ const Register = () => {
 
   return (
     <div className='bg-[linear-gradient(-180deg,#f53d2d,#f63)]'>
+      <Helmet>
+        <title>{t('login_register.register')} | Shopee Clone</title>
+        <meta name='description' content='Tạo tài khoản để mua sắm tại Shopee Clone' />
+      </Helmet>
       <div className='container'>
         <div className='grid grid-cols-1 py-12 lg:grid-cols-6 lg:py-20 lg:pr-32'>
           <div className='lg:col-span-2 lg:col-start-5'>

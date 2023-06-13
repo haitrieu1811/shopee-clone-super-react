@@ -8,6 +8,9 @@
     "already_account": "You already have an account?",
     "no_account": "New to Shopee?"
   },
+  "home": {
+    "home": "Home"
+  },
   "product_detail": {
     "view": "Views",
     "sold": "Sold",
@@ -24,6 +27,7 @@
     "you_may_also_like": "You may also like"
   },
   "cart": {
+    "cart": "Shopping Cart",
     "voucher_head": "Select free shipping voucher below to enjoy shipping discount",
     "product": "Product",
     "products": "Products",

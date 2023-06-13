@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 import pageNotFoundImage from 'src/assets/images/page-not-found.svg';
 import config from 'src/config';
@@ -9,6 +10,10 @@ const NotFound = () => {
 
   return (
     <div className=' bg-white pb-[50px] pt-[70px]'>
+      <Helmet>
+        <title>404 Not Found</title>
+        <meta name='description' content='404 Not Found' />
+      </Helmet>
       <div className='flex flex-col items-center justify-center'>
         <img src={pageNotFoundImage} alt='Page not found' className='mx-auto h-[120px] w-[120px] object-contain' />
         <h2 className='mb-2 mt-4 font-medium text-black/[0.65]'>404</h2>

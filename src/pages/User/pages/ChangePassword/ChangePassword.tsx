@@ -3,6 +3,7 @@ import isEmpty from 'lodash/isEmpty';
 import omit from 'lodash/omit';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
@@ -64,6 +65,10 @@ const ChangePassword = () => {
 
   return (
     <div className='h-[585px] rounded-sm bg-white px-[30px] pb-[10px] shadow'>
+      <Helmet>
+        <title>{t('profile.change_password')}</title>
+        <meta name='description' content='Cập nhật thông tin tài khoản cá nhân tại Shopee Clone' />
+      </Helmet>
       <div className='border-b-[1px] border-b-gray-200 py-[18px]'>
         <Heading
           title={t('change_password.change_password')}

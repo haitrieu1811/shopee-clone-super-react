@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-
+import { Helmet } from 'react-helmet-async';
 import { createContext, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import productApi from 'src/apis/product.api';
 import ProductList from 'src/components/ProductList';
 import useQueryConfig, { QueryConfigType } from 'src/hooks/useQueryConfig';
@@ -23,6 +25,7 @@ export const HomeContext = createContext<HomeContextType>({
 });
 
 const Home = () => {
+  const { t } = useTranslation('pages');
   const queryConfig = useQueryConfig();
 
   const getProductListQuery = useQuery({
@@ -52,6 +55,10 @@ const Home = () => {
       }}
     >
       <div className='bg-[#f5f5f5]'>
+        <Helmet>
+          <title>{t('home.home')} | Shopee Clone</title>
+          <meta name='description' content='Đăng nhập để mua sắm tại Shopee Clone' />
+        </Helmet>
         <div className='container'>
           <div className='flex flex-wrap pt-6'>
             <div className='w-full md:mr-10 md:w-[190px]'>

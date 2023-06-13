@@ -4,8 +4,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-
 import DOMPurify from 'dompurify';
+import { Helmet } from 'react-helmet-async';
+
 import productApi from 'src/apis/product.api';
 import purchasesApi from 'src/apis/purchase.api';
 import FreeShipImage from 'src/assets/images/free-ship.png';
@@ -19,23 +20,18 @@ import { ProductItemType, ProductListParamsType } from 'src/types/product.type';
 import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } from 'src/utils/utils';
 import { purchaseStatus } from 'src/constants/purchase';
 import config from 'src/config';
+import { convert } from 'html-to-text';
 
 const ProductDetail = () => {
   const navigate = useNavigate();
-
   const { t } = useTranslation('pages');
-
   const queryClient = useQueryClient();
-
   const { nameId } = useParams();
   const productId = getIdFromNameId(nameId as string);
-
   const [buyCount, setBuyCount] = useState<number>(1);
-
-  const imageRef = useRef<HTMLImageElement>(null);
-
   const [activeImage, setActiveImage] = useState<string>('');
   const [indexCurrentImages, setIndexCurrentImages] = useState<number[]>([0, 5]);
+  const imageRef = useRef<HTMLImageElement>(null);
 
   const getProductItemQuery = useQuery({
     queryKey: ['productItem', productId],
@@ -152,6 +148,17 @@ const ProductDetail = () => {
     <div className='bg-[#f5f5f5]'>
       {productData ? (
         <div className='container py-5'>
+          <Helmet>
+            <title>{productData.name}</title>
+            <meta
+              name='description'
+              content={convert(productData.description, {
+                limits: {
+                  maxInputLength: 150
+                }
+              })}
+            />
+          </Helmet>
           <div className='grid grid-cols-12 gap-6 rounded-sm bg-white shadow-sm'>
             <div className='col-span-5 p-[15px]'>
               {/* Ảnh được hiển thị */}

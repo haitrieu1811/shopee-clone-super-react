@@ -5,6 +5,7 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 import userApi from 'src/apis/user.api';
 import Button from 'src/components/Button';
@@ -25,7 +26,6 @@ const Profile = () => {
   const { t } = useTranslation('pages');
   const { setProfile } = useContext(AppContext);
   const [file, setFile] = useState<File>();
-
   const previewImage = useMemo(() => {
     return file ? URL.createObjectURL(file) : '';
   }, [file]);
@@ -110,6 +110,10 @@ const Profile = () => {
 
   return (
     <div className='rounded-sm bg-white px-[30px] pb-[10px] shadow'>
+      <Helmet>
+        <title>{t('profile.my_account')}</title>
+        <meta name='description' content='Cập nhật thông tin tài khoản cá nhân tại Shopee Clone' />
+      </Helmet>
       <div className='border-b-[1px] border-b-gray-200 py-[18px]'>
         <Heading title={t('profile.my_profile')} description={t('profile.my_profile_description')} />
       </div>

@@ -13,7 +13,7 @@ interface AppContextInterface {
   reset: () => void;
 }
 
-const initialAppContext = {
+export const getInitialAppContext = () => ({
   isAuthenticated: Boolean(getAccessTokenFromStorage()),
   setIsAuthenticated: () => null,
   profile: getProfileFromStorage(),
@@ -21,13 +21,21 @@ const initialAppContext = {
   extendedCartList: [],
   setExtendedCartList: () => null,
   reset: () => null
-};
+});
+
+const initialAppContext = getInitialAppContext();
 
 export const AppContext = createContext<AppContextInterface>(initialAppContext);
 
-const AppProvider = ({ children }: { children: ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(initialAppContext.isAuthenticated);
-  const [profile, setProfile] = useState<User | null>(initialAppContext.profile);
+const AppProvider = ({
+  children,
+  defaultValue = initialAppContext
+}: {
+  children: ReactNode;
+  defaultValue?: AppContextInterface;
+}) => {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(defaultValue.isAuthenticated);
+  const [profile, setProfile] = useState<User | null>(defaultValue.profile);
   const [extendedCartList, setExtendedCartList] = useState<ExtendedCartItem[]>([]);
 
   const reset = () => {

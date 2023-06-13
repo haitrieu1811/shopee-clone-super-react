@@ -6,6 +6,7 @@ import { Fragment, useContext, useEffect, useMemo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 import purchasesApi from 'src/apis/purchase.api';
 import cartEmptyImage from 'src/assets/images/cart-empty.png';
@@ -148,6 +149,10 @@ const Cart = () => {
 
   return (
     <div className='bg-[#f5f5f5] py-4'>
+      <Helmet>
+        <title>{t('cart.cart')}</title>
+        <meta name='description' content='Đăng nhập để mua sắm tại Shopee Clone' />
+      </Helmet>
       {cartList && cartList.length > 0 ? (
         <Fragment>
           <div className='container mb-[10px] flex items-center rounded-sm border border-[rgba(224,168,0,.4)] bg-white px-4 py-3 shadow-sm'>

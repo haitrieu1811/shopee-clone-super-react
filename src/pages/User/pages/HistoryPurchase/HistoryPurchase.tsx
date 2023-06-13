@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import { Fragment, useMemo } from 'react';
 import { Link, createSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 import purchasesApi from 'src/apis/purchase.api';
 import noPurchaseImage from 'src/assets/images/no-purchase.png';
@@ -56,6 +57,10 @@ const HistoryPurchase = () => {
 
   return (
     <div className='relative'>
+      <Helmet>
+        <title>{t('profile.my_purcharse')}</title>
+        <meta name='description' content='Cập nhật thông tin tài khoản cá nhân tại Shopee Clone' />
+      </Helmet>
       {/* Links */}
       <div className='sticky top-0 mb-3 flex rounded-t-sm bg-white shadow-sm'>
         {purcharseTabs.map((purchase, index) => (

@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Helmet } from 'react-helmet-async';
 
 import authApi from 'src/apis/auth.api';
 import Button from 'src/components/Button';
@@ -59,6 +60,10 @@ const Login = () => {
 
   return (
     <div className='bg-[linear-gradient(-180deg,#f53d2d,#f63)]'>
+      <Helmet>
+        <title>{t('login_register.login')} | Shopee Clone</title>
+        <meta name='description' content='Đăng nhập để mua sắm tại Shopee Clone' />
+      </Helmet>
       <div className='container'>
         <div className='grid grid-cols-1 py-12 lg:grid-cols-6 lg:py-20 lg:pr-32'>
           <div className='lg:col-span-2 lg:col-start-5'>
@@ -82,6 +87,7 @@ const Login = () => {
               />
               <div className='mt-6'>
                 <Button
+                  type='submit'
                   className='w-full rounded-sm bg-orange py-3 text-sm uppercase text-white hover:opacity-90'
                   isLoading={loginMutation.isLoading}
                 >

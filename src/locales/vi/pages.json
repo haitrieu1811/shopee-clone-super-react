@@ -8,6 +8,9 @@
     "already_account": "Bạn đã có tài khoản?",
     "no_account": "Bạn mới biết đến Shopee?"
   },
+  "home": {
+    "home": "Trang chủ"
+  },
   "product_detail": {
     "view": "Lượt xem",
     "sold": "Đã bán",
@@ -24,6 +27,7 @@
     "you_may_also_like": "Có thể bạn cũng thích"
   },
   "cart": {
+    "cart": "Giỏ Hàng",
     "voucher_head": "Nhấn vào mục Mã giảm giá ở cuối trang để hưởng miễn phí vận chuyển bạn nhé!",
     "product": "Sản phẩm",
     "products": "Sản phẩm",

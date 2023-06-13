@@ -19,7 +19,7 @@ import {
 import { isExpiredError, isUnauthorizedError } from './utils';
 import { ErrorResponse } from 'src/types/utils.type';
 
-class Http {
+export class Http {
   instance: AxiosInstance;
   private accessToken: string;
   private profile: User;
@@ -97,7 +97,10 @@ class Http {
             return this.refreshTokenRequest?.then((access_token) => {
               config.headers.Authorization = access_token;
               // Tiếp tục request cũ nếu bị lỗi
-              return this.instance({ ...config, headers: { ...config.headers, Authorization: access_token } });
+              return this.instance({
+                ...config,
+                headers: { ...config.headers, Authorization: access_token }
+              });
             });
           }
           clearLocalStorage();
