@@ -1,6 +1,6 @@
-import { Fragment, ReactNode } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 
 interface DrawerProps {
   children: ReactNode;
