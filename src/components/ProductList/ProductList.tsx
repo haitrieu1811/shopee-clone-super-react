@@ -18,7 +18,7 @@ const ProductList = ({
   productList,
   pagination = true,
   classNameOfList = 'grid grid-cols-10 gap-[10px]',
-  classNameOfItem = 'col-span-10 md:col-span-5 lg:col-span-2'
+  classNameOfItem = 'col-span-5 md:col-span-5 lg:col-span-2'
 }: ProductListProps) => {
   const { isLoading } = useContext(HomeContext);
 

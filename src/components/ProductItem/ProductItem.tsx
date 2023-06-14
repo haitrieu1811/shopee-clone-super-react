@@ -12,7 +12,6 @@ interface ProductItemProps {
 
 const ProductItem = ({ data }: ProductItemProps) => {
   const { t } = useTranslation();
-
   const discount = rateSale(data.price_before_discount, data.price);
 
   return (
@@ -29,7 +28,7 @@ const ProductItem = ({ data }: ProductItemProps) => {
             <div className='uppercase text-white'>{t('product_item.sale')}</div>
           </div>
         )}
-        <div className='relative pt-[100%]'>
+        <div className='relative w-full pt-[100%]'>
           <img src={data.image} alt={data.name} className='absolute left-0 top-0 h-full w-full object-cover' />
           <img src={EventImage} alt={data.name} className='absolute left-0 top-0 h-full w-full object-cover' />
         </div>

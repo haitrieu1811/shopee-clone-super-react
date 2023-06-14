@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 import DOMPurify from 'dompurify';
 import { Helmet } from 'react-helmet-async';
+import { useMediaQuery } from 'react-responsive';
 
 import productApi from 'src/apis/product.api';
 import purchasesApi from 'src/apis/purchase.api';
@@ -32,6 +33,7 @@ const ProductDetail = () => {
   const [activeImage, setActiveImage] = useState<string>('');
   const [indexCurrentImages, setIndexCurrentImages] = useState<number[]>([0, 5]);
   const imageRef = useRef<HTMLImageElement>(null);
+  const isMobile = useMediaQuery({ maxWidth: 640 });
 
   const getProductItemQuery = useQuery({
     queryKey: ['productItem', productId],
@@ -160,7 +162,7 @@ const ProductDetail = () => {
             />
           </Helmet>
           <div className='grid grid-cols-12 gap-6 rounded-sm bg-white shadow-sm'>
-            <div className='col-span-5 p-[15px]'>
+            <div className='col-span-12 p-[15px] md:col-span-5'>
               {/* Ảnh được hiển thị */}
               <div
                 className='relative w-full overflow-hidden pt-[100%] hover:cursor-zoom-in'
@@ -211,7 +213,7 @@ const ProductDetail = () => {
                 </button>
               </div>
             </div>
-            <div className='col-span-7 pr-[35px] pt-5'>
+            <div className='col-span-12 p-5 md:col-span-7 md:pr-[35px] md:pt-5'>
               {/* Tiêu đề sản phẩm */}
               <div className='flex items-center'>
                 {productData.sold > 500 && (
@@ -219,14 +221,14 @@ const ProductDetail = () => {
                     {t('product_detail.favorite')}
                   </span>
                 )}
-                <h1 className='line-clamp-2 text-xl font-medium' title={productData.name}>
+                <h1 className='line-clamp-4 text-xl font-medium md:line-clamp-2' title={productData.name}>
                   {productData.name}
                 </h1>
               </div>
               {/* Thông tin về đánh giá, số lượt xem và số lượng bán được*/}
-              <div className='mt-[10px] flex items-center'>
+              <div className='mt-[10px] flex items-center overflow-auto'>
                 <div
-                  className='flex items-center border-r-[1px] border-r-slate-400 pr-[15px]'
+                  className='flex flex-shrink-0 items-center border-r-[1px] border-r-slate-400 pr-[15px]'
                   title={String(productData.rating)}
                 >
                   <div className='mr-[5px] border-b-[1px] border-b-orange text-orange'>
@@ -238,19 +240,19 @@ const ProductDetail = () => {
                     startEmptyClassName='w-4 h-4 fill-slate-300'
                   />
                 </div>
-                <div className='flex items-center border-r-[1px] border-r-slate-400 px-[15px]'>
+                <div className='flex flex-shrink-0 items-center border-r-[1px] border-r-slate-400 px-[15px]'>
                   <div className='mr-[5px] border-b-[1px] border-b-black' title={String(productData.view)}>
                     {formatNumberToSocialStyle(productData.view)}
                   </div>
                   <div className='text-sm capitalize text-gray-500'>{t('product_detail.view')}</div>
                 </div>
-                <div className='flex items-center px-[15px]' title={String(productData.sold)}>
+                <div className='flex flex-shrink-0 items-center px-[15px]' title={String(productData.sold)}>
                   <div className='mr-[5px]'>{formatNumberToSocialStyle(productData.sold)}</div>
                   <div className='text-sm capitalize text-gray-500'>{t('product_detail.sold')}</div>
                 </div>
               </div>
               {/* Giá sản phẩm */}
-              <div className='mt-[24px] flex items-center rounded-sm bg-[#f5f5f5] px-4 py-[15px]'>
+              <div className='mt-[24px] flex items-center overflow-auto rounded-sm bg-[#f5f5f5] px-4 py-[15px]'>
                 <div className='mr-4 flex items-center text-xl text-[#929292] line-through'>
                   <span className='mr-1 underline'>đ</span>
                   {formatCurrency(productData.price_before_discount)}
@@ -291,9 +293,9 @@ const ProductDetail = () => {
                 </div>
               </div>
               {/* Thêm và mua sản phẩm */}
-              <div className='mt-[50px] flex'>
+              <div className='mt-[50px] flex flex-wrap'>
                 <Button
-                  className='mr-[15px] rounded-sm border-[1px] border-orange bg-[#ff57221a] px-5 py-[10px] hover:bg-[#ffc5b22e]'
+                  className='w-full rounded-sm border-[1px] border-orange bg-[#ff57221a] px-5 py-[10px] hover:bg-[#ffc5b22e] md:mr-[15px]'
                   onClick={handleAddToCart}
                 >
                   <AddCartIcon className='mr-[10px] h-5 w-5 fill-transparent stroke-orange' />
@@ -301,7 +303,7 @@ const ProductDetail = () => {
                 </Button>
                 <Button
                   onClick={buyNow}
-                  className='rounded-sm border-[1px] border-orange bg-orange px-5 py-[10px] hover:bg-[#f05d40]'
+                  className='mt-4 w-full rounded-sm border-[1px] border-orange bg-orange px-5 py-[10px] hover:bg-[#f05d40] md:mt-0'
                 >
                   <span className='capitalize text-white'>{t('product_detail.buy_now')}</span>
                 </Button>
@@ -309,7 +311,7 @@ const ProductDetail = () => {
             </div>
           </div>
           {/* Mô tả sản phẩm */}
-          <div className='mt-[15px] rounded-sm bg-white p-[25px] shadow-sm'>
+          <div className='mt-[15px] rounded-sm bg-white p-4 shadow-sm md:p-[25px]'>
             <h2 className='mb-[24px] bg-[#f5f5f5] p-[14px] text-lg uppercase'>
               {t('product_detail.product_description')}
             </h2>
@@ -328,7 +330,7 @@ const ProductDetail = () => {
                 productList={productListRelated}
                 pagination={false}
                 classNameOfList='grid grid-cols-12 gap-[10px]'
-                classNameOfItem='col-span-10 md:col-span-5 lg:col-span-2'
+                classNameOfItem='col-span-6 md:col-span-5 lg:col-span-2'
               />
             </div>
           )}

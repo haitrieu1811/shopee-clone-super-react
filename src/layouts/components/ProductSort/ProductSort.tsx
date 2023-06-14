@@ -71,8 +71,8 @@ const ProductSort = () => {
   };
 
   return (
-    <div className='mb-3 flex items-center justify-between rounded-sm bg-[#00000008] px-5 py-[13px]'>
-      <div className='flex items-center'>
+    <div className='mb-3 flex max-w-full items-center justify-between overflow-auto rounded-sm bg-[#00000008] py-[13px] md:px-5'>
+      <div className='flex flex-shrink-0 items-center'>
         <span className='mr-4 text-sm text-gray-600'>{t('sort_products.sort_by')}</span>
         <button
           onClick={() => handleSort(sortBy.createdAt)}
@@ -147,7 +147,7 @@ const ProductSort = () => {
           </FloatingPortal>
         </div>
       </div>
-      <div className='flex items-center'>
+      <div className='flex flex-shrink-0 items-center'>
         <div className='mr-5 text-sm'>
           <span className='text-orange'>{page}</span>
           <span>/{pageSize}</span>

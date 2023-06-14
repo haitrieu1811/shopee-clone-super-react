@@ -17,7 +17,6 @@ const MAX_PURCHASES = 5;
 
 const Cart = () => {
   const { t } = useTranslation('layouts');
-
   const { isAuthenticated } = useContext(AppContext);
 
   const getCartListQuery = useQuery({

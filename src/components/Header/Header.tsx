@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 
 import config from 'src/config';
 import Logo from '../Logo';
@@ -8,6 +9,8 @@ import Cart from './Cart';
 import Search from './Search';
 
 const Header = () => {
+  const isMobile = useMediaQuery({ maxWidth: 640 });
+
   return (
     <header className='bg-[linear-gradient(-180deg,#f53d2d,#f63)]'>
       <div className='container'>
@@ -18,7 +21,7 @@ const Header = () => {
           <Logo className='block w-[162px] fill-white' />
         </Link>
         <Search />
-        <Cart />
+        {!isMobile && <Cart />}
       </nav>
     </header>
   );

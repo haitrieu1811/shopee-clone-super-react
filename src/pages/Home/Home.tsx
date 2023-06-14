@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { createContext, useMemo } from 'react';
+import { Fragment, createContext, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useMediaQuery } from 'react-responsive';
 
 import productApi from 'src/apis/product.api';
 import ProductList from 'src/components/ProductList';
@@ -9,6 +10,11 @@ import useQueryConfig, { QueryConfigType } from 'src/hooks/useQueryConfig';
 import AsideFilter from 'src/layouts/components/AsideFilter';
 import ProductSort from 'src/layouts/components/ProductSort';
 import { CategoryType, ProductListParamsType } from 'src/types/product.type';
+import Drawer from 'src/components/Drawer';
+import { CartIcon, FilterIcon } from 'src/components/Icons';
+import { Link } from 'react-router-dom';
+import config from 'src/config';
+import Cart from 'src/components/Header/Cart';
 
 interface HomeContextType {
   pageSize: number;
@@ -27,6 +33,8 @@ export const HomeContext = createContext<HomeContextType>({
 const Home = () => {
   const { t } = useTranslation('pages');
   const queryConfig = useQueryConfig();
+  const isMobile = useMediaQuery({ maxWidth: 640 });
+  const [showMobileFilter, setShowMobileFilter] = useState<boolean>(false);
 
   const getProductListQuery = useQuery({
     queryKey: ['productList', queryConfig],
@@ -61,11 +69,36 @@ const Home = () => {
         </Helmet>
         <div className='container'>
           <div className='flex flex-wrap pt-6'>
-            <div className='w-full md:mr-10 md:w-[190px]'>
-              <AsideFilter />
-            </div>
+            {!isMobile && (
+              <div className='w-full md:mr-10 md:w-[190px]'>
+                <AsideFilter />
+              </div>
+            )}
+            {isMobile && (
+              <Fragment>
+                <button
+                  onClick={() => {
+                    setShowMobileFilter(true);
+                  }}
+                  className='fixed bottom-10 right-0 z-10 rounded-sm bg-orange p-1'
+                >
+                  <FilterIcon className='h-8 w-8 stroke-white' />
+                </button>
+                <Link to={config.routes.cart} className='fixed bottom-24 right-0 z-10 rounded-sm bg-orange p-2'>
+                  <Cart />
+                </Link>
+                <Drawer
+                  visible={showMobileFilter}
+                  onClickMask={() => {
+                    setShowMobileFilter(false);
+                  }}
+                >
+                  <AsideFilter />
+                </Drawer>
+              </Fragment>
+            )}
             <div className='flex-1'>
-              <ProductSort />
+              {/* <ProductSort /> */}
               <ProductList productList={productList || []} />
             </div>
           </div>
