@@ -10,6 +10,7 @@ import useRouteElements from './hooks/useRouteElements';
 import './i18n/i18n.ts';
 import './index.css';
 import { localStorageEventTarget } from './utils/auth';
+import ScrollToTop from './components/ScrollToTop/ScrollToTop.tsx';
 
 const App = () => {
   const element = useRouteElements();
@@ -25,8 +26,10 @@ const App = () => {
   return (
     <HelmetProvider>
       <ErrorBoundary>
-        {element}
-        <ToastContainer position='top-center' autoClose={2000} />
+        <ScrollToTop>
+          {element}
+          <ToastContainer position='top-center' autoClose={2000} />
+        </ScrollToTop>
       </ErrorBoundary>
       <ReactQueryDevtools />
     </HelmetProvider>
