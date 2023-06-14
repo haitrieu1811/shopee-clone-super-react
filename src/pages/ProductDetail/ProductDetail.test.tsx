@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'vitest';
 
-import { delay, logScreen, renderWithRouter } from 'src/utils/__test__/testUtils';
+import { delay, renderWithRouter } from 'src/utils/__test__/testUtils';
 
 describe('ProductDetail', () => {
   test('Render thành công giao diện chi tiết sản phẩm', async () => {

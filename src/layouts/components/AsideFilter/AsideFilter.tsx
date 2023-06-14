@@ -29,6 +29,7 @@ const AsideFilter = () => {
     control,
     trigger,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm<FormData>({
     defaultValues: {
@@ -62,6 +63,7 @@ const AsideFilter = () => {
   };
 
   const handleRemoveAll = () => {
+    reset();
     navigate({
       pathname: config.routes.home,
       search: createSearchParams(omit(queryConfig, ['price_min', 'price_max', 'category', 'rating_filter'])).toString()

@@ -31,7 +31,13 @@ const InputNumber = (
 
   return (
     <div className={className}>
-      <input className={classNameInput} onChange={handleChange} {...rest} value={value || localValue} ref={ref} />
+      <input
+        className={classNameInput}
+        onChange={handleChange}
+        {...rest}
+        value={value === undefined ? localValue : value}
+        ref={ref}
+      />
       {errorMessage && <div className={classNameError}>{errorMessage}</div>}
     </div>
   );
