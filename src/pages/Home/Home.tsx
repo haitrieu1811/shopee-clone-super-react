@@ -1,20 +1,19 @@
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet-async';
 import { Fragment, createContext, useMemo, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
 
+import { Link } from 'react-router-dom';
 import productApi from 'src/apis/product.api';
+import Drawer from 'src/components/Drawer';
+import Cart from 'src/components/Header/Cart';
+import { FilterIcon } from 'src/components/Icons';
 import ProductList from 'src/components/ProductList';
+import config from 'src/config';
 import useQueryConfig, { QueryConfigType } from 'src/hooks/useQueryConfig';
 import AsideFilter from 'src/layouts/components/AsideFilter';
-import ProductSort from 'src/layouts/components/ProductSort';
 import { CategoryType, ProductListParamsType } from 'src/types/product.type';
-import Drawer from 'src/components/Drawer';
-import { CartIcon, FilterIcon } from 'src/components/Icons';
-import { Link } from 'react-router-dom';
-import config from 'src/config';
-import Cart from 'src/components/Header/Cart';
 
 interface HomeContextType {
   pageSize: number;

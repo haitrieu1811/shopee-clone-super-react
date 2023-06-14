@@ -1,13 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import classNames from 'classnames';
+import DOMPurify from 'dompurify';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useTranslation } from 'react-i18next';
-import DOMPurify from 'dompurify';
-import { Helmet } from 'react-helmet-async';
-import { useMediaQuery } from 'react-responsive';
 
+import { convert } from 'html-to-text';
 import productApi from 'src/apis/product.api';
 import purchasesApi from 'src/apis/purchase.api';
 import FreeShipImage from 'src/assets/images/free-ship.png';
@@ -17,11 +17,10 @@ import ProductList from 'src/components/ProductList';
 import ProductRating from 'src/components/ProductRating';
 import QuantityController from 'src/components/QuantityController';
 import Spinner from 'src/components/Spinner/Spinner';
+import config from 'src/config';
+import { purchaseStatus } from 'src/constants/purchase';
 import { ProductItemType, ProductListParamsType } from 'src/types/product.type';
 import { formatCurrency, formatNumberToSocialStyle, getIdFromNameId, rateSale } from 'src/utils/utils';
-import { purchaseStatus } from 'src/constants/purchase';
-import config from 'src/config';
-import { convert } from 'html-to-text';
 
 const ProductDetail = () => {
   const navigate = useNavigate();
@@ -33,7 +32,6 @@ const ProductDetail = () => {
   const [activeImage, setActiveImage] = useState<string>('');
   const [indexCurrentImages, setIndexCurrentImages] = useState<number[]>([0, 5]);
   const imageRef = useRef<HTMLImageElement>(null);
-  const isMobile = useMediaQuery({ maxWidth: 640 });
 
   const getProductItemQuery = useQuery({
     queryKey: ['productItem', productId],
