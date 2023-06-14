@@ -9,7 +9,8 @@
     "no_account": "Bạn mới biết đến Shopee?"
   },
   "home": {
-    "home": "Trang chủ"
+    "home": "Trang chủ",
+    "filter": "Bộ lọc"
   },
   "product_detail": {
     "view": "Lượt xem",

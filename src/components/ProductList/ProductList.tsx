@@ -24,7 +24,7 @@ const ProductList = ({
 
   return (
     <Fragment>
-      {isLoading && <Spinner className='mt-10 text-center' />}
+      {isLoading && <Spinner className='my-10 text-center' />}
       {!isLoading && productList.length > 0 && (
         <Fragment>
           <div className={classNameOfList}>

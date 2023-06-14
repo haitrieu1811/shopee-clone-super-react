@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
+import { Link } from 'react-router-dom';
 
 import config from 'src/config';
 import Logo from '../Logo';
@@ -21,7 +21,13 @@ const Header = () => {
           <Logo className='block w-[162px] fill-white' />
         </Link>
         <Search />
-        {!isMobile && <Cart />}
+        {!isMobile ? (
+          <Cart />
+        ) : (
+          <button className='fixed bottom-[30px] right-4 z-[999] rounded-full bg-orange p-3'>
+            <Cart />
+          </button>
+        )}
       </nav>
     </header>
   );

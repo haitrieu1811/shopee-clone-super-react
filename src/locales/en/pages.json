@@ -9,7 +9,8 @@
     "no_account": "New to Shopee?"
   },
   "home": {
-    "home": "Home"
+    "home": "Home",
+    "filter": "Filter"
   },
   "product_detail": {
     "view": "Views",

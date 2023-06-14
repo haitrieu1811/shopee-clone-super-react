@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 import classNames from 'classnames';
-import { useTranslation } from 'react-i18next';
 import { Fragment, useMemo } from 'react';
-import { Link, createSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { useTranslation } from 'react-i18next';
+import { Link, createSearchParams } from 'react-router-dom';
 
 import purchasesApi from 'src/apis/purchase.api';
 import noPurchaseImage from 'src/assets/images/no-purchase.png';
@@ -62,25 +62,31 @@ const HistoryPurchase = () => {
         <meta name='description' content='Cập nhật thông tin tài khoản cá nhân tại Shopee Clone' />
       </Helmet>
       {/* Links */}
-      <div className='sticky top-0 mb-3 flex rounded-t-sm bg-white shadow-sm'>
-        {purcharseTabs.map((purchase, index) => (
-          <Link
-            key={index}
-            to={{
-              pathname: config.routes.historyPurchase,
-              search: createSearchParams({
-                status: String(purchase.status)
-              }).toString()
-            }}
-            className={classNames('flex-1 border-b-2 py-[13.5px] text-center capitalize', {
-              'border-b-orange text-orange': purchase.status === status,
-              'border-b-transparent text-black/80': purchase.status !== status
-            })}
-          >
-            {purchase.name}
-          </Link>
-        ))}
+      <div className='max-w-full overflow-auto'>
+        <div className='sticky top-0 mb-3 flex rounded-t-sm shadow-sm'>
+          {purcharseTabs.map((purchase, index) => (
+            <Link
+              key={index}
+              to={{
+                pathname: config.routes.historyPurchase,
+                search: createSearchParams({
+                  status: String(purchase.status)
+                }).toString()
+              }}
+              className={classNames(
+                'flex-shrink-0 border-b-2 bg-white px-5 py-[13.5px] text-center capitalize md:flex-1 md:px-0',
+                {
+                  'border-b-orange text-orange': purchase.status === status,
+                  'border-b-transparent text-black/80': purchase.status !== status
+                }
+              )}
+            >
+              {purchase.name}
+            </Link>
+          ))}
+        </div>
       </div>
+
       {purchases && purchases.length > 0 ? (
         // Danh sách đơn hàng
         <Fragment>
@@ -88,10 +94,10 @@ const HistoryPurchase = () => {
             <div key={purchase._id} className='mt-3 rounded-sm bg-white'>
               <Link
                 to={`/product/${generateNameId({ name: purchase.product.name, id: purchase.product._id })}`}
-                className='flex items-center justify-between border-b border-b-slate-200 p-6'
+                className='flex items-center justify-between overflow-auto border-b border-b-slate-200 p-6'
               >
-                <div className='flex items-start'>
-                  <div className='rounded-sm border border-slate-300'>
+                <div className='flex flex-shrink-0 items-start'>
+                  <div className='flex-shrink-0 rounded-sm border border-slate-300'>
                     <img src={purchase.product.image} alt={purchase.product.name} className='h-20 w-20' />
                   </div>
                   <div className='pl-3'>
@@ -125,9 +131,9 @@ const HistoryPurchase = () => {
         </Fragment>
       ) : (
         // Không có đơn hàng nào
-        <div className='flex min-h-[600px] flex-col items-center justify-center rounded-sm bg-white'>
+        <div className='flex min-h-[300px] flex-col items-center justify-center rounded-sm bg-white md:min-h-[600px]'>
           <img src={noPurchaseImage} alt='No purcharse' className='h-[100px] w-[100px]' />
-          <p className='mt-5 text-lg text-black/80'>{t('history_purcharses.no_purchases')}</p>
+          <p className='mt-5 text-black/80 md:text-lg'>{t('history_purcharses.no_purchases')}</p>
         </div>
       )}
     </div>

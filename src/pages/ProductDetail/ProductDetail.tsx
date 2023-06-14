@@ -266,9 +266,11 @@ const ProductDetail = () => {
                 )}
               </div>
               {/* Vận chuyển */}
-              <div className='mt-[50px] flex items-start'>
-                <div className='mr-[50px] text-sm text-slate-500'>{t('product_detail.transport')}</div>
-                <div className='flex items-start'>
+              <div className='mt-[50px] flex flex-wrap items-start'>
+                <div className='mb-5 mr-[50px] w-full text-sm text-slate-500 md:mb-0 md:w-auto'>
+                  {t('product_detail.transport')}
+                </div>
+                <div className='flex w-full items-start pl-5 md:w-auto md:pl-0'>
                   <img src={FreeShipImage} alt='Free ship' className='w-[25px]' />
                   <div className='ml-[10px]'>
                     <h3 className='mb-1 text-sm font-medium'>{t('product_detail.free_shipping')}</h3>
@@ -277,17 +279,21 @@ const ProductDetail = () => {
                 </div>
               </div>
               {/* Input nhập số lượng sản phẩm cần mua */}
-              <div className='mt-[25px] flex items-center'>
-                <div className='mr-[50px] text-sm text-slate-500'>{t('product_detail.quantity')}</div>
-                <QuantityController
-                  onDecrease={handleChangeBuyCount}
-                  onIncrease={handleChangeBuyCount}
-                  onType={handleChangeBuyCount}
-                  value={buyCount}
-                  max={productData.quantity}
-                />
-                <div className='ml-4 text-sm text-slate-500'>
-                  {productData.quantity} {t('product_detail.products_available')}
+              <div className='mt-[25px] flex flex-wrap items-center'>
+                <div className='mb-5 mr-[50px] w-full text-sm text-slate-500 md:mb-0 md:w-auto'>
+                  {t('product_detail.quantity')}
+                </div>
+                <div className='flex w-full items-center pl-5 md:w-auto md:pl-0'>
+                  <QuantityController
+                    onDecrease={handleChangeBuyCount}
+                    onIncrease={handleChangeBuyCount}
+                    onType={handleChangeBuyCount}
+                    value={buyCount}
+                    max={productData.quantity}
+                  />
+                  <div className='ml-4 text-sm text-slate-500'>
+                    {productData.quantity} {t('product_detail.products_available')}
+                  </div>
                 </div>
               </div>
               {/* Thêm và mua sản phẩm */}
@@ -301,7 +307,7 @@ const ProductDetail = () => {
                 </Button>
                 <Button
                   onClick={buyNow}
-                  className='mt-4 w-full rounded-sm border-[1px] border-orange bg-orange px-5 py-[10px] hover:bg-[#f05d40] md:mt-0 md:w-auto'
+                  className='mt-2 w-full rounded-sm border-[1px] border-orange bg-orange px-5 py-[10px] hover:bg-[#f05d40] md:mt-0 md:w-auto'
                 >
                   <span className='capitalize text-white'>{t('product_detail.buy_now')}</span>
                 </Button>
@@ -309,7 +315,7 @@ const ProductDetail = () => {
             </div>
           </div>
           {/* Mô tả sản phẩm */}
-          <div className='mt-[15px] rounded-sm bg-white p-4 shadow-sm md:p-[25px]'>
+          <div className='mt-[15px] overflow-auto rounded-sm bg-white p-4 shadow-sm md:p-[25px]'>
             <h2 className='mb-[24px] bg-[#f5f5f5] p-[14px] text-lg uppercase'>
               {t('product_detail.product_description')}
             </h2>

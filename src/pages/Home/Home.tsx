@@ -4,15 +4,12 @@ import { Helmet } from 'react-helmet-async';
 import { useTranslation } from 'react-i18next';
 import { useMediaQuery } from 'react-responsive';
 
-import { Link } from 'react-router-dom';
 import productApi from 'src/apis/product.api';
 import Drawer from 'src/components/Drawer';
-import Cart from 'src/components/Header/Cart';
-import { FilterIcon } from 'src/components/Icons';
 import ProductList from 'src/components/ProductList';
-import config from 'src/config';
 import useQueryConfig, { QueryConfigType } from 'src/hooks/useQueryConfig';
 import AsideFilter from 'src/layouts/components/AsideFilter';
+import ProductSort from 'src/layouts/components/ProductSort';
 import { CategoryType, ProductListParamsType } from 'src/types/product.type';
 
 interface HomeContextType {
@@ -67,37 +64,32 @@ const Home = () => {
           <meta name='description' content='Đăng nhập để mua sắm tại Shopee Clone' />
         </Helmet>
         <div className='container'>
-          <div className='flex flex-wrap pt-6'>
-            {!isMobile && (
-              <div className='w-full md:mr-10 md:w-[190px]'>
+          <div className='flex flex-wrap pt-3 md:pt-6'>
+            <div className='w-full md:mr-10 md:w-[190px]'>
+              {!isMobile ? (
                 <AsideFilter />
-              </div>
-            )}
-            {isMobile && (
-              <Fragment>
-                <button
-                  onClick={() => {
-                    setShowMobileFilter(true);
-                  }}
-                  className='fixed bottom-10 right-0 z-10 rounded-sm bg-orange p-1'
-                >
-                  <FilterIcon className='h-8 w-8 stroke-white' />
-                </button>
-                <Link to={config.routes.cart} className='fixed bottom-24 right-0 z-10 rounded-sm bg-orange p-2'>
-                  <Cart />
-                </Link>
-                <Drawer
-                  visible={showMobileFilter}
-                  onClickMask={() => {
-                    setShowMobileFilter(false);
-                  }}
-                >
-                  <AsideFilter />
-                </Drawer>
-              </Fragment>
-            )}
+              ) : (
+                <Fragment>
+                  <button
+                    onClick={() => setShowMobileFilter(true)}
+                    className='mb-3 flex w-full items-center justify-center rounded-sm border border-gray-200 bg-white py-2 font-bold capitalize'
+                  >
+                    {t('home.filter')}
+                  </button>
+                  <Drawer
+                    visible={showMobileFilter}
+                    onClickMask={() => {
+                      setShowMobileFilter(false);
+                    }}
+                  >
+                    <AsideFilter />
+                  </Drawer>
+                </Fragment>
+              )}
+            </div>
+            {isMobile && <ProductSort />}
             <div className='flex-1'>
-              {/* <ProductSort /> */}
+              {!isMobile && <ProductSort />}
               <ProductList productList={productList || []} />
             </div>
           </div>
