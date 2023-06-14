@@ -293,7 +293,7 @@ const ProductDetail = () => {
               {/* Thêm và mua sản phẩm */}
               <div className='mt-[50px] flex flex-wrap'>
                 <Button
-                  className='w-full rounded-sm border-[1px] border-orange bg-[#ff57221a] px-5 py-[10px] hover:bg-[#ffc5b22e] md:mr-[15px]'
+                  className='w-full rounded-sm border-[1px] border-orange bg-[#ff57221a] px-5 py-[10px] hover:bg-[#ffc5b22e] md:mr-[15px] md:w-auto'
                   onClick={handleAddToCart}
                 >
                   <AddCartIcon className='mr-[10px] h-5 w-5 fill-transparent stroke-orange' />
@@ -301,7 +301,7 @@ const ProductDetail = () => {
                 </Button>
                 <Button
                   onClick={buyNow}
-                  className='mt-4 w-full rounded-sm border-[1px] border-orange bg-orange px-5 py-[10px] hover:bg-[#f05d40] md:mt-0'
+                  className='mt-4 w-full rounded-sm border-[1px] border-orange bg-orange px-5 py-[10px] hover:bg-[#f05d40] md:mt-0 md:w-auto'
                 >
                   <span className='capitalize text-white'>{t('product_detail.buy_now')}</span>
                 </Button>
