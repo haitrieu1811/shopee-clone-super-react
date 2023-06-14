@@ -68,7 +68,7 @@ const Poppover = ({
                   left: middlewareData.arrow?.x,
                   top: middlewareData.arrow?.y
                 }}
-              ></span>
+              />
               {floatingEnabled && floating}
             </motion.div>
           )}

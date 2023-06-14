@@ -117,12 +117,12 @@ const HistoryPurchase = () => {
                   <ShieldIcon className='mr-[5px] h-4 w-4' />
                   <span className='text-sm text-black/80'>{t('history_purcharses.order_total')}: </span>
                 </div>
-                <div className='text-2xl text-orange'>
+                <div className='text-xl text-orange md:text-2xl'>
                   ₫{formatCurrency(purchase.product.price * purchase.buy_count)}
                 </div>
               </div>
               <div className='flex justify-end p-6 pt-3'>
-                <Button className='h-10 w-[150px] rounded-sm bg-orange text-sm capitalize text-white hover:bg-orange/90'>
+                <Button className='h-10 w-[100px] rounded-sm bg-orange text-sm capitalize text-white hover:bg-orange/90 md:w-[150px]'>
                   {t('history_purcharses.buy_again')}
                 </Button>
               </div>
