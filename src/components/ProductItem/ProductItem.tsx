@@ -34,12 +34,12 @@ const ProductItem = ({ data }: ProductItemProps) => {
         </div>
         <div className='bg-white p-2 pb-4'>
           <h3 className='line-clamp-2 text-xs text-gray-800'>{data.name}</h3>
-          <div className='my-2 flex items-center'>
-            <span className='text-sm text-gray-500 line-through'>
+          <div className='my-2 flex items-center truncate'>
+            <span className='text-xs text-gray-500 line-through md:text-sm'>
               <span className='mr-[2px] text-xs underline'>đ</span>
               {formatCurrency(data.price_before_discount)}
             </span>
-            <span className='ml-1 text-orange'>
+            <span className='ml-1 text-sm text-orange md:text-base'>
               <span className='mr-[2px] text-sm underline'>đ</span>
               {formatCurrency(data.price)}
             </span>
