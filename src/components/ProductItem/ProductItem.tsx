@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { Link } from 'react-router-dom';
 
 import EventImage from 'src/assets/images/event.png';
 import { ProductItemType } from 'src/types/product.type';

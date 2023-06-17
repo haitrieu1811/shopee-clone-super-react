@@ -94,9 +94,9 @@ const HistoryPurchase = () => {
             <div key={purchase._id} className='mt-3 rounded-sm bg-white'>
               <Link
                 to={`/product/${generateNameId({ name: purchase.product.name, id: purchase.product._id })}`}
-                className='flex items-center justify-between overflow-auto border-b border-b-slate-200 p-6'
+                className='flex items-center justify-between overflow-auto border-b border-b-slate-200 p-6 md:overflow-visible '
               >
-                <div className='flex flex-shrink-0 items-start'>
+                <div className='flex flex-shrink-0 items-start md:flex-shrink-[unset]'>
                   <div className='flex-shrink-0 rounded-sm border border-slate-300'>
                     <img src={purchase.product.image} alt={purchase.product.name} className='h-20 w-20' />
                   </div>

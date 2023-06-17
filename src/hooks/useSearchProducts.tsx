@@ -10,7 +10,6 @@ type FormData = SearchSchema;
 
 const useSearchProducts = () => {
   const navigate = useNavigate();
-
   const queryConfig = useQueryConfig();
 
   const { register, handleSubmit } = useForm<FormData>({

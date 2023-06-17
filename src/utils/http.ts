@@ -7,6 +7,7 @@ import config from 'src/config';
 import HttpStatusCode from 'src/constants/httpStatusCode';
 import { AuthResponse, RefreshTokenResponse } from 'src/types/auth.type';
 import { User } from 'src/types/user.type';
+import { ErrorResponse } from 'src/types/utils.type';
 import {
   clearLocalStorage,
   getAccessTokenFromStorage,
@@ -17,7 +18,6 @@ import {
   setRefreshTokenToStorage
 } from './auth';
 import { isExpiredError, isUnauthorizedError } from './utils';
-import { ErrorResponse } from 'src/types/utils.type';
 
 export class Http {
   instance: AxiosInstance;

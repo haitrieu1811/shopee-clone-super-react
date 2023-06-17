@@ -23,7 +23,6 @@ const Drawer = ({ children, visible, onClickMask }: DrawerProps) => {
           <motion.div
             initial={{ opacity: 0, translateX: '-100%' }}
             animate={{ opacity: 1, translateX: 0 }}
-            exit={{ opacity: 0, translateX: '-100%' }}
             transition={{ duration: 0.25 }}
             className='relative z-10 max-h-full min-h-full max-w-[80%] overflow-auto bg-white p-4'
           >
