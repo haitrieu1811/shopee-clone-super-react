@@ -29,7 +29,7 @@ const Cart = () => {
   const cartList = useMemo(() => getCartListQuery.data?.data.data, [getCartListQuery.data?.data.data]);
 
   return (
-    <Link to={config.routes.cart} className='relative mr-14 mr-3 md:mt-6'>
+    <Link to={config.routes.cart} className='relative mr-3 md:mr-14 md:mt-6'>
       <Poppover
         reference={
           <Fragment>
