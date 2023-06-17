@@ -198,8 +198,8 @@ const Cart = () => {
                   ))}
                 </div>
                 {/* Checkout */}
-                <div className='sticky bottom-0 mt-3 rounded-sm bg-white'>
-                  <div className='flex min-w-[1000px] items-center justify-between py-3'>
+                <div className='sticky bottom-0 mt-3 rounded-sm'>
+                  <div className='container flex min-w-[1000px] items-center justify-between bg-white py-3'>
                     <div className='flex items-center'>
                       <Checkbox checked={isAllChecked} onChange={handleCheckAll} />
                       <button className='ml-6 capitalize' onClick={handleCheckAll}>

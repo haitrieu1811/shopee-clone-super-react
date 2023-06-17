@@ -9,7 +9,7 @@ const Search = () => {
   const { onSubmit, register } = useSearchProducts();
 
   return (
-    <div className='mr-5 flex-1 md:mx-20 md:mr-0'>
+    <div className='mr-5 flex-1 md:mx-20'>
       <div className='relative'>
         <form onSubmit={onSubmit}>
           <input
